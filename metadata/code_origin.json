@@ -1,0 +1,24 @@
+{
+  "restored_algorithms": {
+    "line_envelopes.py": {
+      "recovered_sha256": "7f85932300b63f9919925d70496ec349fa70a2721f9efd69f7bdff7148a65c99",
+      "formatted_sha256": "8b2c58cec27a01125fc6c47de46e272b1f7dd2d14b0108d3e486bab9526d0623",
+      "algorithm_ast_preserved": true,
+      "ast_comparison": "exclude_docstrings"
+    },
+    "text_bounds.py": {
+      "recovered_sha256": "0c3aee48b05ee76b5cf6de64e6635fbf6821244f27e32b6663e9254a48b6d7c1",
+      "formatted_sha256": "9ea4f9ed333b4e16ecd191bd19d7d0520de945e2e6361551edfb3438f714d4fb",
+      "algorithm_ast_preserved": true,
+      "ast_comparison": "exclude_docstrings"
+    }
+  },
+  "original_v1_available": false,
+  "approved_v2_fingerprint": "2cb433dfa988f03c5ab55caff60c902ccfd8c856ecb518edeef261b6d086dee3",
+  "notes": [
+    "Hai thuật toán box được khôi phục từ lịch sử tool call trước lúc xoá.",
+    "Chỉ định dạng và dịch chú thích sang tiếng Việt; logic thuật toán giữ nguyên khi so sánh AST bỏ qua docstring.",
+    "Luồng mới có đọc nguồn, audit, đề xuất box, duyệt, crop, xuất và kiểm tra.",
+    "V1 và 15 ảnh đã cách ly không còn; không tuyên bố phục hồi mọi byte đầu vào lịch sử."
+  ]
+}

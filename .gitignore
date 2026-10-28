@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Dữ liệu train và bản đóng gói lưu riêng ngoài Git.
+/vn-plate-dataset_v2/
+/vn-plate-dataset_v2.zip
+/sources/

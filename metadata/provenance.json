@@ -1,0 +1,186 @@
+{
+  "previous_revision": "line_envelopes_final",
+  "previous_content_fingerprint": "2cb433dfa988f03c5ab55caff60c902ccfd8c856ecb518edeef261b6d086dee3",
+  "previous_validation_sha256": "32b8c5e57fbca1cf99a3b9635967ae503845ed1d14720ab6a0eef7f25bb5c076",
+  "corrected_text_pairs": [
+    {
+      "rec_image": "train/rec/images/rec_000067.jpg",
+      "det_image": "train/det/images/det_00047.jpg",
+      "det_object_index": 0,
+      "before": "50S2",
+      "after": "59S2",
+      "source_det_sha256": "5040f439969fa416538ca825f274620092fb401d5883e5144a868f34a4898d7c",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "train/rec/images/rec_000353.jpg",
+      "det_image": "train/det/images/det_00323.jpg",
+      "det_object_index": 0,
+      "before": "51K1",
+      "after": "54K1",
+      "source_det_sha256": "930e2519b9b89a4883b52f35b4692996cd6439b7759e8d5342ed5e0bbc76b04f",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "train/rec/images/rec_000387.jpg",
+      "det_image": "train/det/images/det_00340.jpg",
+      "det_object_index": 0,
+      "before": "51T1",
+      "after": "59T1",
+      "source_det_sha256": "5c7d2e5885216fe203e6363dd7a9de9ab86ca90dd340eb33a51b4e2ecab2e12f",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "train/rec/images/rec_000413.jpg",
+      "det_image": "train/det/images/det_00353.jpg",
+      "det_object_index": 0,
+      "before": "53R5",
+      "after": "63R5",
+      "source_det_sha256": "b91add7ef63bcc731193c53a13a25d5e0e369c700d0418806150d1ae956adf25",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "train/rec/images/rec_000421.jpg",
+      "det_image": "train/det/images/det_00357.jpg",
+      "det_object_index": 0,
+      "before": "53V3",
+      "after": "53Y3",
+      "source_det_sha256": "2c2a6d0a00c9eef74ab87da9a522afb0d3c2f93cbe673c3c9894a7cb9547b0b4",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "train/rec/images/rec_000759.jpg",
+      "det_image": "train/det/images/det_00526.jpg",
+      "det_object_index": 1,
+      "before": "00019",
+      "after": "00018",
+      "source_det_sha256": "b4aefdd7418144a3737602118706155c732a6d6088661af2e5b354097f8359e0",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "train/rec/images/rec_001099.jpg",
+      "det_image": "train/det/images/det_00709.jpg",
+      "det_object_index": 0,
+      "before": "61P1",
+      "after": "62P1",
+      "source_det_sha256": "ca694da19de9e1b0a004f845443e909ede8a1e34066243e1c7422d5b4ab86776",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "train/rec/images/rec_001136.jpg",
+      "det_image": "train/det/images/det_00729.jpg",
+      "det_object_index": 0,
+      "before": "64R2",
+      "after": "65R2",
+      "source_det_sha256": "d80f915aaf3eaa6e8ad318e876a2f5c024ba99cab7532fb996bbb9ac926bd552",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "train/rec/images/rec_001240.jpg",
+      "det_image": "train/det/images/det_00781.jpg",
+      "det_object_index": 0,
+      "before": "69Y1",
+      "after": "59Y1",
+      "source_det_sha256": "2d2af280244c7ecabe4c7c89db32c045e10a30026000ae1a92dc530dd6039b56",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "train/rec/images/rec_001250.jpg",
+      "det_image": "train/det/images/det_00786.jpg",
+      "det_object_index": 0,
+      "before": "71B4",
+      "after": "71B1",
+      "source_det_sha256": "f6786e0f4a97befc4126feef8796e7fe8a5e41fce7aeffac90c7a94aa1be539b",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "train/rec/images/rec_001251.jpg",
+      "det_image": "train/det/images/det_00786.jpg",
+      "det_object_index": 1,
+      "before": "0140",
+      "after": "40140",
+      "source_det_sha256": "f6786e0f4a97befc4126feef8796e7fe8a5e41fce7aeffac90c7a94aa1be539b",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "train/rec/images/rec_001257.jpg",
+      "det_image": "train/det/images/det_00789.jpg",
+      "det_object_index": 1,
+      "before": "89897",
+      "after": "39897",
+      "source_det_sha256": "302ce17f551cacb876b60a2c4e3063ba73050b9a15c8f7c1beaf228d3bface18",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "train/rec/images/rec_001305.jpg",
+      "det_image": "train/det/images/det_00813.jpg",
+      "det_object_index": 1,
+      "before": "37332",
+      "after": "37372",
+      "source_det_sha256": "3c392c33a0f179cb0e4ce3fc233783e77c70b9676a5c8fba028df63ed9fd4c7f",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "train/rec/images/rec_001325.jpg",
+      "det_image": "train/det/images/det_00824.jpg",
+      "det_object_index": 0,
+      "before": "80NG37613",
+      "after": "80NG37614",
+      "source_det_sha256": "b1a0a11cb684028d72a64ca362d3fd7673d3f333e75c6c258569cb5b5962cfb5",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "val/rec/images/rec_000114.jpg",
+      "det_image": "val/det/images/det_00090.jpg",
+      "det_object_index": 0,
+      "before": "54V9",
+      "after": "53V9",
+      "source_det_sha256": "0fc7aef59c1760a0c474d0998e4fe83f21bf5669cd7b2314ac379c20e89d2c8b",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "rec_image": "test/rec/images/rec_000162.jpg",
+      "det_image": "test/det/images/det_00110.jpg",
+      "det_object_index": 0,
+      "before": "63V1",
+      "after": "63Y1",
+      "source_det_sha256": "d77c31383580b187bdb9ec0af3674f560ec78b117a9a94b7f33154f4f35c3d70",
+      "reason": "independently_read_visible_characters_in_native_DET_and_REC"
+    },
+    {
+      "det_image": "train/det/images/det_00238.jpg",
+      "object_index": 0,
+      "det_object_index": 0,
+      "rec_image": "train/rec/images/rec_000261.jpg",
+      "before": "51F69011",
+      "after": "51F59011",
+      "reason": "Native source visibly reads 51F-590.11; verified visually, no automatic relabel"
+    }
+  ],
+  "quarantined_files": [
+    "val/det/images/det_00005.jpg",
+    "val/det/images/det_00007.jpg",
+    "val/det/images/det_00161.jpg",
+    "val/det/images/det_00162.jpg",
+    "val/det/images/det_00204.jpg",
+    "val/rec/images/rec_000010.jpg",
+    "val/rec/images/rec_000011.jpg",
+    "val/rec/images/rec_000014.jpg",
+    "val/rec/images/rec_000015.jpg",
+    "val/rec/images/rec_000254.jpg",
+    "val/rec/images/rec_000255.jpg",
+    "val/rec/images/rec_000256.jpg",
+    "val/rec/images/rec_000257.jpg",
+    "val/rec/images/rec_000337.jpg",
+    "val/rec/images/rec_000338.jpg"
+  ],
+  "historical_uncertain_links": 20,
+  "unmapped_legacy_reviews": 699,
+  "model_trained": false,
+  "notes": [
+    "Quad và nhãn đã được duyệt trực quan trước khi dọn code.",
+    "831 nguồn REC gốc còn cần để tái tạo crop; được giữ trong sources/rec.",
+    "Luồng mới dùng nguồn và recipe đã chốt; không còn tái chạy lịch sử v1.",
+    "Chưa chứng nhận mọi họ ảnh nguồn độc lập giữa các split."
+  ]
+}

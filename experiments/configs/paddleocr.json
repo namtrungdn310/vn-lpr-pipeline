@@ -1,0 +1,12 @@
+{
+  "name": "paddleocr",
+  "dataset": "vn-plate-dataset_v2",
+  "run_dir": "runs/paddleocr",
+  "chars": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  "seed": 42,
+  "model": {"det_size": 320, "rec_h": 48, "rec_w": 320},
+  "train": {"det_epochs": 150, "rec_epochs": 200, "det_batch": 8, "rec_batch": 32, "workers": 0},
+  "postprocess": {"threshold": 0.3, "box_threshold": 0.6, "unclip": 1.5, "max_candidates": 100},
+  "benchmark": {"threads": 4, "warmup": 20, "repeats": 5},
+  "upstream": {"revision": "07603421c20a96bb94bb87d0c4211032527ae706", "det_config": "configs/det/ch_PP-OCRv4/ch_PP-OCRv4_det_student.yml", "rec_config": "configs/rec/PP-OCRv4/en_PP-OCRv4_rec.yml"}
+}

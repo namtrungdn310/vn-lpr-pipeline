@@ -1,0 +1,6 @@
+--extra-index-url https://www.paddlepaddle.org.cn/packages/stable/cu120/
+-r requirements-cpu.txt
+paddlepaddle-gpu==2.6.2.post120
+paddle2onnx==1.3.1
+opencv-contrib-python==4.11.0.86
+opencv-python-headless==4.11.0.86

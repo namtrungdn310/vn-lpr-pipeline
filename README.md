@@ -1,5 +1,8 @@
 # Dataset biển số v2
 
+Phần train và so sánh ba hệ thống OCR nằm ở **`train_compare.ipynb`** và **`experiments/README.md`**.
+Phần dưới dành cho chuẩn hoá dữ liệu; hai quy trình dùng môi trường riêng.
+
 Mở `main.ipynb`, chọn kernel `.venv`, **Restart Kernel** rồi chạy từ trên xuống.
 Notebook gồm đầy đủ các bước chuẩn hoá, đề xuất/duyệt box, dựng lại v2 và kiểm tra đầu ra.
 

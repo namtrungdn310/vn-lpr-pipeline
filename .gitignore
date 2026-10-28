@@ -7,3 +7,17 @@ __pycache__/
 /vn-plate-dataset_v2/
 /vn-plate-dataset_v2.zip
 /sources/
+
+# Môi trường, mã nguồn ngoài và trọng số thí nghiệm lưu riêng.
+/.venv-ocr*/
+/third_party/*
+!/third_party/VietLPR_v2/
+/third_party/VietLPR_v2/*
+!/third_party/VietLPR_v2/__init__.py
+!/third_party/VietLPR_v2/models.py
+!/third_party/VietLPR_v2/README.md
+/runs/
+/models/
+
+# Notebook nguồn giữ trên máy; kiến trúc v2 nằm trong third_party/VietLPR_v2/.
+/VietLPR_v2.ipynb

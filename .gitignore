@@ -1,23 +1,63 @@
-.venv/
+/.venv*/
+/venv/
 __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# Dữ liệu train và bản đóng gói lưu riêng ngoài Git.
+# Ảnh đã giải nén và nguồn crop giữ trên máy.
 /vn-plate-dataset_v2/
-/vn-plate-dataset_v2.zip
 /sources/
 
+# Chỉ đưa ZIP dataset v2 đã chốt lên Git.
+*.zip
+!/vn-plate-dataset_v2.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# Trọng số và model xuất không đưa lên Git, kể cả khi nằm ngoài runs/.
+*.onnx
+*.onnx.data
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.pdparams
+*.pdopt
+*.pdmodel
+*.pdiparams
+*.pdiparams.info
+*.tflite
+*.engine
+
 # Môi trường, mã nguồn ngoài và trọng số thí nghiệm lưu riêng.
-/.venv-ocr*/
 /third_party/*
 !/third_party/VietLPR_v2/
 /third_party/VietLPR_v2/*
 !/third_party/VietLPR_v2/__init__.py
 !/third_party/VietLPR_v2/models.py
 !/third_party/VietLPR_v2/README.md
+!/third_party/VietLPR_v2/source.py
+!/third_party/VietLPR_v2/inference.py
+!/third_party/VietLPR_v2/source_manifest.json
+!/third_party/PaddleOCR_suite/
+/third_party/PaddleOCR_suite/*
+!/third_party/PaddleOCR_suite/__init__.py
+!/third_party/PaddleOCR_suite/processors.py
+!/third_party/PaddleOCR_suite/source_manifest.json
+!/third_party/PaddleOCR_suite/README.md
+!/third_party/PaddleOCR_suite/LICENSE
 /runs/
 /models/
+
+# Cấu hình riêng và file do công cụ IDE tự sinh.
+.env
+.env.*
+!.env.example
+/.github/modernize/
 
 # Notebook nguồn giữ trên máy; kiến trúc v2 nằm trong third_party/VietLPR_v2/.
 /VietLPR_v2.ipynb

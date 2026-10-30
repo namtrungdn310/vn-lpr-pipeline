@@ -1,14 +1,16 @@
-# VietLPR_v2
+# VietLPR_v2 — nguồn notebook
 
-`models.py` chứa FastDBNet, FastCRNN và hàm gộp nhánh RepConv.
-Code được tách từ notebook nguồn `VietLPR_v2.ipynb`. Notebook gốc đã được xoá khỏi dự án.
+Nguồn: `VietLPR_v2_colab.ipynb` do người dùng cung cấp.
+SHA256: `aafe7b2f63c0c6346ac00f807c96ee249de186e37021a0d0c81daf915f2adbed`.
 
-SHA256 notebook nguồn: `aafe7b2f63c0c6346ac00f807c96ee249de186e37021a0d0c81daf915f2adbed`.
+- `models.py`: kiến trúc từ cell 14; chỉ rút gọn docstring.
+- `source.py`: các định nghĩa gốc từ cell 8, 12, 17, 19, 20, 22, 23. Giữ nguyên AST các hàm đã tách.
+- `inference.py`: nguyên nội dung `lpr_infer.py` trong cell 31, bỏ magic `%%writefile`.
+- `source_manifest.json`: cell và checksum đối chiếu.
 
-Train/val: `experiments/train_torch.py`. Xuất ONNX: `experiments/export.py`.
-Cấu hình: `experiments/configs/vietlpr_v2.json`.
-Hậu xử lý NumPy: `experiments/ops_v2.py`.
+Không thực thi cell Colab, Drive, download, video, Paddle hoặc YOLO khi import.
+`ocr/upstream.py` nối cấu hình/thiết bị; `train_torch.py` nối split cố định, dataset thật và checkpoint.
+V2 dùng stretch, EMA, jitter và REC từ crop DET theo nguồn. Vòng train gốc được gọi trực tiếp.
+Pipeline ONNX gốc có thể dùng độc lập từ các file `lpr_infer.py`, `lpr_config.json`, `det.onnx`, `rec.onnx` do export tạo.
 
-`python -m experiments.bootstrap --source VietLPR_v2` dùng trực tiếp mã nguồn đã tách.
-Chỉ tách lại kiến trúc nếu khôi phục notebook gốc đúng SHA256 ở thư mục gốc.
-Ba file mã nguồn/tài liệu trong thư mục này được lưu trong Git để dùng được khi không có notebook gốc.
+Bản notebook nguyên byte được giữ tại `runs/vietlpr_v2/source/VietLPR_v2_colab.ipynb` để đối chiếu; không cần file Downloads khi chạy lại dự án.

@@ -1,0 +1,25 @@
+{
+  "vietlpr_v1": {
+    "url": "https://github.com/vietdai-bk/VietLPR_v2",
+    "local_name": "VietLPR_v1",
+    "commit": "ff3a6b3d65b64463ae61b251abb9e117c3e0ea56",
+    "model_file": "vietlpr/models.py",
+    "notes": "Giữ luồng nguồn; dùng split cố định và batch phù hợp GPU 4 GB."
+  },
+  "vietlpr_v2": {
+    "local_name": "VietLPR_v2",
+    "model_file": "models.py",
+    "source_notebook": "VietLPR_v2_colab.ipynb",
+    "source_sha256": "aafe7b2f63c0c6346ac00f807c96ee249de186e37021a0d0c81daf915f2adbed",
+    "notes": "Tách mô hình, train/EMA và suy luận từ notebook đúng SHA; adapter nối dữ liệu và môi trường."
+  },
+  "paddle_suite": {
+    "models_config": "configs/ocr/paddle_suite.json",
+    "processors": {
+      "url": "https://github.com/PaddlePaddle/PaddleX",
+      "commit": "4c968d30b9d0d4a693d9eaaef0881c20f8d7d0e0",
+      "manifest": "third_party/PaddleOCR_suite/source_manifest.json"
+    },
+    "notes": "7 bản: v4 server/mobile, v5 server/mobile, v6 medium/small/tiny. Nguồn, revision và SHA từng DET/REC nằm trong models_config; dùng pretrained, không train lại."
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "notebook": "VietLPR_v2_colab.ipynb",
+  "sha256": "aafe7b2f63c0c6346ac00f807c96ee249de186e37021a0d0c81daf915f2adbed",
+  "definitions": {
+    "load_img": {
+      "cell": 8,
+      "ast_sha256": "13f1ca5694979cc9a48ba7310df226d19da2206105addd47cbfc581cfb2d0625"
+    },
+    "order_points": {
+      "cell": 12,
+      "ast_sha256": "1b7cda282cea8e4f002ee922a4c87a143760976f0357857e2df26f59a7ee9054"
+    },
+    "rec_target_size": {
+      "cell": 12,
+      "ast_sha256": "7c24ddcdf614b8e6b73a752853e75f3ed4f41fc78312ffb7da82917bceeee0ec"
+    },
+    "crop_for_rec": {
+      "cell": 12,
+      "ast_sha256": "d1d9ee0875da30bd37c98f852b7ebcf3cae2f24ee6f4a8e750679122bd599b7e"
+    },
+    "full_quad": {
+      "cell": 12,
+      "ast_sha256": "ff5c801d33f2a882ee021d33deb30e40924544803289a53e7f3739321a2cbf7e"
+    },
+    "sort_lines": {
+      "cell": 12,
+      "ast_sha256": "1ae2a80097a47f0fe4c493dcf4aff39d6c268aa1a3a7c74decaf8752f0a5c36b"
+    },
+    "photo_aug": {
+      "cell": 12,
+      "ast_sha256": "86c40adf0bc7f20a93b927612f3f7a354e0f9e18107a4fbc1c75f924e9eba5a0"
+    },
+    "jitter_quad": {
+      "cell": 12,
+      "ast_sha256": "0c1808dc2eff3ead7b7664f7c08378acc9456efbb69e1fa809868649dd61c13d"
+    },
+    "_fit_canvas": {
+      "cell": 12,
+      "ast_sha256": "d5473cdb53c4b304327f0c4cb2cfba816b6a454a62a3c4e6d3fe2e3750e47825"
+    },
+    "det_geo_aug": {
+      "cell": 12,
+      "ast_sha256": "caa1d701b85123181e7662f5dba8119aa078c86066dce71defd22049c8b2183c"
+    },
+    "worker_init": {
+      "cell": 17,
+      "ast_sha256": "a68f53445c0bcf50e2588d81d6bd3539ebaf1cf4aab11bb6bced83cbc7f7c3d5"
+    },
+    "ModelEMA": {
+      "cell": 17,
+      "ast_sha256": "8190e7ee8a455dac25850bf7710940999806a2d10a824bc516a6c9daf1c34381"
+    },
+    "param_groups": {
+      "cell": 17,
+      "ast_sha256": "77251f410f67c76b659f867ba5c82c7546caa9ed7c13b1ac63a7fbe4bda7b74d"
+    },
+    "train_model": {
+      "cell": 17,
+      "ast_sha256": "c3a7a91d7711732d03d3cdd105ebb75e55e79d0dcf549c72b71f1bfced7567b4"
+    },
+    "offset_poly": {
+      "cell": 19,
+      "ast_sha256": "a751ef62826746247a0c96c114426f95f9e24c6192b87bca9115fa7e29fbdcbe"
+    },
+    "make_det_gt": {
+      "cell": 19,
+      "ast_sha256": "8cdf4e731c6ebacefe5ebdffe579efff190e173e5c02cc75c30c66ef4aafbe2e"
+    },
+    "DetDataset": {
+      "cell": 19,
+      "ast_sha256": "c41c053662e97737b8d36fd3ccb1284628ef143bdf5bab964f920e7f5ccfffb6"
+    },
+    "det_loss": {
+      "cell": 19,
+      "ast_sha256": "0b308454703f915135ba191714a2453fcf7847b7c356a82cc7f5c66b2c342d1a"
+    },
+    "det_step": {
+      "cell": 19,
+      "ast_sha256": "5484e251d71819d3f375fc44b100119b4347ab80b0c45d633863646576daf46e"
+    },
+    "_fit_line": {
+      "cell": 19,
+      "ast_sha256": "a7fc55b24f96bbe0b4e3264e9c31c97b70148f69760ef6811bffb286c729d60f"
+    },
+    "fit_quad": {
+      "cell": 19,
+      "ast_sha256": "76b813cd03f720202e5760bf13ea245608f84c05a6cc5c19cf6790c93cc0d120"
+    },
+    "det_postprocess": {
+      "cell": 19,
+      "ast_sha256": "f518b856c59e4b2014ed293b297fbebbbb94e61bbbfe24de721bccf6da4608d8"
+    },
+    "det_preprocess": {
+      "cell": 19,
+      "ast_sha256": "057cdfe90d97943e0db99045bf2592da7b739cb3d8e8305b536eb7cb1021daa8"
+    },
+    "det_predict_probs": {
+      "cell": 19,
+      "ast_sha256": "04eb4b30274a67a562a9b03cfb38755c251cfda1dc8d1baf30daded406d1586a"
+    },
+    "quad_iou": {
+      "cell": 19,
+      "ast_sha256": "aa1537ec8fc70962ceb48861e309c4601659df0ab02a84d869552287e4adb024"
+    },
+    "match_boxes": {
+      "cell": 19,
+      "ast_sha256": "fc4c7e3eab5c52018f6b41ced066baabccc9c42d374477bc9b781509ac73a081"
+    },
+    "eval_det": {
+      "cell": 19,
+      "ast_sha256": "c32b0f9aaa5812aa8c7e7b4dc21e7b19af2c59ad28d77bb5343786fd1635d9f5"
+    },
+    "build_det": {
+      "cell": 20,
+      "ast_sha256": "b0be1e8f5a0c3f0cf700256ad5ad1058bb545dc6c2100a57153250ace6b506c6"
+    },
+    "encode_text": {
+      "cell": 22,
+      "ast_sha256": "86daf9797dfe5aec1146c3693c8e6aa2635be34842821cb496eddd6b8d4db2c6"
+    },
+    "RecDataset": {
+      "cell": 22,
+      "ast_sha256": "77526db26c41ab8c371ed6341ad41dee47f5af4167697766adecbde0df0453b6"
+    },
+    "RecFromDetDataset": {
+      "cell": 22,
+      "ast_sha256": "c01718b54732981b9a1739ffdaadebc3f489c170fe245ca33d21092cebe42c6b"
+    },
+    "predict_train_quads": {
+      "cell": 22,
+      "ast_sha256": "da2f5b79bc67b9b0e0803ff7a6673119e92a226947881c11570e7cdcfe294281"
+    },
+    "rec_collate": {
+      "cell": 22,
+      "ast_sha256": "22ed9281485fca963f267782532cf23b203af0b21669988317c1d31201bd051c"
+    },
+    "rec_step": {
+      "cell": 22,
+      "ast_sha256": "19373dd47a634e9d3d2fba1c636d4bbbd2c6690579ca5cf66970aa355f615040"
+    },
+    "ctc_greedy": {
+      "cell": 22,
+      "ast_sha256": "3ed3e267d335674b253dd0c523dee359f7e94001192d60d49e9d2bbe535b60a2"
+    },
+    "rec_predict": {
+      "cell": 22,
+      "ast_sha256": "20cc25f59b90ad463b4e74a48cca7b2faf5343e5c30e642c2266d0f3e4472321"
+    },
+    "edit_distance": {
+      "cell": 22,
+      "ast_sha256": "7bb9f77a3a971412ab57fc0473c044d1e40a0e29539753281c4289b16c31480e"
+    },
+    "text_metrics": {
+      "cell": 22,
+      "ast_sha256": "fc17b2f5edaa282ccd8b845d897f82912ef24f5fa4d4ad41b2ba0a739f770606"
+    },
+    "eval_rec": {
+      "cell": 22,
+      "ast_sha256": "4a38a827749512685a6458365d977d884056c605082e656fc6fb04ef0bb01081"
+    },
+    "build_rec": {
+      "cell": 23,
+      "ast_sha256": "8e445465fd108e730c81ff5896e33ce05aa8b8f0afe1281edc7dab9ff71e814e"
+    }
+  },
+  "inference_cell": 31,
+  "inference_sha256": "36f66185f3c6af63018329946aa523839a34d891c5c28b0857db13e38d0cce79",
+  "models": {
+    "RepConv": "13379c56fd72cfa2399a711bbc35a1ac2537066a026459301ab39b7d4637ee54",
+    "MOBlock": "40a6cccf31248912ce5916e96ddc5e673551b3b0228bc1c48a22340299946dec",
+    "ConvBNAct": "f0c65253bc4f6b3c13201cf111a58c815e57dc5666e23d48b7bb52bef1089755",
+    "reparameterize_model": "c57e41aa0d0271ff2788c22811f7ee0deb4a6a5aba80e0e95762bc6605afca3f",
+    "FastDBNet": "9ec984c9cabda8089f519cffc0e5b7fa91aaef57f0930a8f9477db5151e317d4",
+    "MHSA": "c187a4b5d12780fc875845242abe889638879b2f19f30904a3d57e6c3ebd4404",
+    "ConvSeqBlock": "b175edc54620fcfc1e1491888c81cd3582a82d453f6b5bb41136a842537b077c",
+    "FastCRNN": "428dcf99c0bebc62fbbad5223bfc881d69f05f6d0698e8a3e975692bd775d228"
+  }
+}

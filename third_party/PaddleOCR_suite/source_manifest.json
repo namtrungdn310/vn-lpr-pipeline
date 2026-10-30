@@ -1,0 +1,42 @@
+{
+  "repository": "https://github.com/PaddlePaddle/PaddleX",
+  "revision": "4c968d30b9d0d4a693d9eaaef0881c20f8d7d0e0",
+  "definitions": {
+    "DetResizeForTest": {
+      "url": "https://raw.githubusercontent.com/PaddlePaddle/PaddleX/4c968d30b9d0d4a693d9eaaef0881c20f8d7d0e0/paddlex/inference/models/text_detection/processors.py",
+      "ast_sha256": "7d880f18396083b918c540e29c00076ca2bb769b58d7258429c70f57d4a01d8b"
+    },
+    "NormalizeImage": {
+      "url": "https://raw.githubusercontent.com/PaddlePaddle/PaddleX/4c968d30b9d0d4a693d9eaaef0881c20f8d7d0e0/paddlex/inference/models/text_detection/processors.py",
+      "ast_sha256": "7d2d839e14105ea164876629e953daf2e004773c0351b01b683955f07f090e12"
+    },
+    "DBPostProcess": {
+      "url": "https://raw.githubusercontent.com/PaddlePaddle/PaddleX/4c968d30b9d0d4a693d9eaaef0881c20f8d7d0e0/paddlex/inference/models/text_detection/processors.py",
+      "ast_sha256": "5b3299d1fd09f1239e2ccab1faa2f2eed4bfb19c51aa0acd05b67ad7a7bed257"
+    },
+    "validate_text_rec_image_array": {
+      "url": "https://raw.githubusercontent.com/PaddlePaddle/PaddleX/4c968d30b9d0d4a693d9eaaef0881c20f8d7d0e0/paddlex/inference/models/text_recognition/processors.py",
+      "ast_sha256": "c32a603eabbb03f959e4733440339c4f9075b21ab3cf532acffee63c0eb8cb69"
+    },
+    "OCRReisizeNormImg": {
+      "url": "https://raw.githubusercontent.com/PaddlePaddle/PaddleX/4c968d30b9d0d4a693d9eaaef0881c20f8d7d0e0/paddlex/inference/models/text_recognition/processors.py",
+      "ast_sha256": "f406b2f4a241c7cbb5bee10c01d01150df98be3181344d9cd22e0a3d44936d60"
+    },
+    "BaseRecLabelDecode": {
+      "url": "https://raw.githubusercontent.com/PaddlePaddle/PaddleX/4c968d30b9d0d4a693d9eaaef0881c20f8d7d0e0/paddlex/inference/models/text_recognition/processors.py",
+      "ast_sha256": "20243c1dc7a8e6691ca3254110c97e2907ca07dfcc66ccde12d8aa9002ec002d"
+    },
+    "CTCLabelDecode": {
+      "url": "https://raw.githubusercontent.com/PaddlePaddle/PaddleX/4c968d30b9d0d4a693d9eaaef0881c20f8d7d0e0/paddlex/inference/models/text_recognition/processors.py",
+      "ast_sha256": "9bc7ccefd4587dc745cffde06c12d6aa5bd7e920c7ca77fb6aab3de917d7d5d6"
+    },
+    "SortQuadBoxes": {
+      "url": "https://raw.githubusercontent.com/PaddlePaddle/PaddleX/4c968d30b9d0d4a693d9eaaef0881c20f8d7d0e0/paddlex/inference/pipelines/components/common/sort_boxes.py",
+      "ast_sha256": "bca1a6d3548de6ee182463ed84dcae69c0da4af8d3ebc1cfd230d4893ec12614"
+    },
+    "CropByPolys": {
+      "url": "https://raw.githubusercontent.com/PaddlePaddle/PaddleX/4c968d30b9d0d4a693d9eaaef0881c20f8d7d0e0/paddlex/inference/pipelines/components/common/crop_image_regions.py",
+      "ast_sha256": "b2ee03bf8c813fe915545b0d95233f66ddd85556f024ff283600913321a47433"
+    }
+  }
+}

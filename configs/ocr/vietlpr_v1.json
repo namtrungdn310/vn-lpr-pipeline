@@ -1,0 +1,46 @@
+{
+  "name": "vietlpr_v1",
+  "dataset": "vn-plate-dataset_v2",
+  "run_dir": "runs/vietlpr_v1",
+  "chars": "0123456789ABCDEFGHJKLMNPRSTUVXYZ",
+  "seed": 20,
+  "model": {
+    "det_size": 320,
+    "det_alpha": 0.5,
+    "rec_alpha": 0.9,
+    "rec_hidden": 80,
+    "rec_h": 32,
+    "rec_w": 128,
+    "rec_resize": "pad",
+    "rec_dropout": 0.1
+  },
+  "train": {
+    "det_epochs": 30,
+    "rec_epochs": 100,
+    "det_batch": 8,
+    "rec_batch": 64,
+    "det_lr": 0.001,
+    "rec_lr": 0.001,
+    "weight_decay": 0.0001,
+    "workers": 0,
+    "amp": true,
+    "warmup_epochs": 5
+  },
+  "postprocess": {
+    "threshold": 0.25,
+    "box_threshold": 0.0,
+    "unclip": 0.0,
+    "min_area": 20,
+    "max_lines": 2,
+    "max_single_line_height": 100,
+    "bbox_pad": 2
+  },
+  "benchmark": {
+    "threads": 4,
+    "warmup": 20,
+    "repeats": 5
+  },
+  "training_revision": 3,
+  "input_protocol": "upstream_v1",
+  "source_reference": "ff3a6b3d65b64463ae61b251abb9e117c3e0ea56"
+}

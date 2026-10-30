@@ -13,6 +13,11 @@
     "source_sha256": "aafe7b2f63c0c6346ac00f807c96ee249de186e37021a0d0c81daf915f2adbed",
     "notes": "Tách mô hình, train/EMA và suy luận từ notebook đúng SHA; adapter nối dữ liệu và môi trường."
   },
+  "public_vn": {
+    "purpose": "benchmark_only",
+    "models_config": "configs/ocr/public_vn.json",
+    "notes": "Trọng số public chuyên biển Việt Nam: CCT-S, LPRNet, YOLOv5n/m và YOLOv8n OCR ký tự. Bằng chứng train, commit, URL và SHA nằm trong models_config; không train lại."
+  },
   "paddle_suite": {
     "models_config": "configs/ocr/paddle_suite.json",
     "processors": {

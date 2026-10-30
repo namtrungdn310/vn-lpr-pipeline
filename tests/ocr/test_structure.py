@@ -20,7 +20,7 @@ class StructureTests(unittest.TestCase):
 
     def test_paddle_sources_point_to_catalog_and_pinned_processors(self):
         sources = json.loads((ROOT / "configs/ocr/sources.json").read_text(encoding="utf-8"))
-        self.assertEqual(set(sources), {"vietlpr_v1", "vietlpr_v2", "paddle_suite"})
+        self.assertEqual(set(sources), {"vietlpr_v1", "vietlpr_v2", "paddle_suite", "public_vn"})
         paddle = sources["paddle_suite"]
         self.assertTrue((ROOT / paddle["models_config"]).is_file())
         self.assertEqual(len(load_catalog()["variants"]), 7)
@@ -49,4 +49,14 @@ class StructureTests(unittest.TestCase):
         rows = self.samples()
         rows[1]["threads"] = 8
         with self.assertRaisesRegex(ValueError, "threads"):
+            check_conditions(rows)
+
+    def test_only_full_plate_input_to_text_scopes_may_be_combined(self):
+        rows = self.samples()
+        rows[0]["timing_scope"] = "plate image to final text; excludes disk IO and model load"
+        for row in rows[1:]:
+            row["timing_scope"] = "preprocess+DET+postprocess+crop+REC+decode; excludes disk IO and model load"
+        check_conditions(rows)
+        rows[0]["timing_scope"] = "REC on ground truth line crops only"
+        with self.assertRaisesRegex(ValueError, "timing_scope"):
             check_conditions(rows)

@@ -1,0 +1,156 @@
+{
+  "dataset": "vn-plate-dataset_v2",
+  "run_dir": "runs/public_vn_ocr",
+  "benchmark": {
+    "threads": 4,
+    "warmup": 20,
+    "repeats": 5,
+    "seed": 42
+  },
+  "source_files": [
+    {
+      "filename": "yolo5/common.py",
+      "url": "https://raw.githubusercontent.com/ultralytics/yolov5/v6.1/models/common.py",
+      "sha256": "d8e4b2a1c368ed0c8a8505c06bab05571f44dc9ac7a9fc3cf0253be70d1f0d35"
+    },
+    {
+      "filename": "yolo5/yolo.py",
+      "url": "https://raw.githubusercontent.com/ultralytics/yolov5/v6.1/models/yolo.py",
+      "sha256": "927845e6bb80c2cc701836ddc4924b03c8b3ca6e690c838f8e86f7a6b5048579"
+    },
+    {
+      "filename": "yolo8/conv.py",
+      "url": "https://raw.githubusercontent.com/ultralytics/ultralytics/v8.3.229/ultralytics/nn/modules/conv.py",
+      "sha256": "f565250731c3fb02e0cf4ae22f2b6dcc048b22a06d5cf2ba264e447722221823"
+    },
+    {
+      "filename": "yolo8/block.py",
+      "url": "https://raw.githubusercontent.com/ultralytics/ultralytics/v8.3.229/ultralytics/nn/modules/block.py",
+      "sha256": "f92baff7a3a8d0b335b2a1c72ae76de652f96087162e4c70ad8541808024993b"
+    },
+    {
+      "filename": "yolo8/head.py",
+      "url": "https://raw.githubusercontent.com/ultralytics/ultralytics/v8.3.229/ultralytics/nn/modules/head.py",
+      "sha256": "1c02c485bd48e5536a09024507ce0e813f5da5102b20a59b8a0972a21ceb49f7"
+    },
+    {
+      "filename": "yolo8/tal.py",
+      "url": "https://raw.githubusercontent.com/ultralytics/ultralytics/v8.3.229/ultralytics/utils/tal.py",
+      "sha256": "c3ba22e9fa743662fa84787ecaf0825f5701bae07826e5fbc35c22478fd2319b"
+    },
+    {
+      "filename": "yolo8/tasks.py",
+      "url": "https://raw.githubusercontent.com/ultralytics/ultralytics/v8.3.229/ultralytics/nn/tasks.py",
+      "sha256": "7647c8ba35de49a47c1662d8cab865e4f8f6535876d893043a4bfd4f7a482307"
+    },
+    {
+      "filename": "lprnet/LPRNet.py",
+      "url": "https://raw.githubusercontent.com/lephamcong/PBL4_Deep-Learning/054cc054cdc2b24305f3675a9c14832459c8f9db/LPRNet_Pytorch_VietNam/model/LPRNet.py",
+      "sha256": "94a49696268ff942d92d58285ddeacab9b2ef35a4102bd73862518729e0dfc14"
+    },
+    {
+      "filename": "lprnet/load_data.py",
+      "url": "https://raw.githubusercontent.com/lephamcong/PBL4_Deep-Learning/054cc054cdc2b24305f3675a9c14832459c8f9db/LPRNet_Pytorch_VietNam/data/load_data.py",
+      "sha256": "9399b7019107fdbd324ef27eb071518ea20b2361d19d437efce39f9f3810d156"
+    }
+  ],
+  "variants": [
+    {
+      "name": "CCT_S_VN",
+      "family": "cct",
+      "repository": "ddkhoa2605/LicensePlateDetection",
+      "revision": "f1c732e2270becc44df1de6529372f63ef251076",
+      "chars": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_",
+      "weights": {
+        "filename": "cct_s_v1_vn.onnx",
+        "url": "https://raw.githubusercontent.com/ddkhoa2605/LicensePlateDetection/f1c732e2270becc44df1de6529372f63ef251076/cct_s_v1_vn.onnx",
+        "sha256": "99f0ac35f0dd3cf8231c8972d8ee6bd66672bde368c6481f070b164242f128fd"
+      },
+      "plate_config": {
+        "filename": "cct_s_v1_vn_plate_config.yaml",
+        "url": "https://raw.githubusercontent.com/ddkhoa2605/LicensePlateDetection/f1c732e2270becc44df1de6529372f63ef251076/cct_s_v1_vn_plate_config.yaml",
+        "sha256": "8ade332ef026520a3360a7c154cc10be664bee25482f3997bce34a7007b4786e"
+      },
+      "preprocess": "source_app",
+      "training_evidence": "https://github.com/ddkhoa2605/LicensePlateDetection/blob/f1c732e2270becc44df1de6529372f63ef251076/README.md",
+      "inference_source": "https://github.com/ddkhoa2605/LicensePlateDetection/blob/f1c732e2270becc44df1de6529372f63ef251076/appStreamlit.py",
+      "notes": "Fine-tune CCT trên 3763 crop biển Việt Nam theo tác giả; SHA khác CCT global. Graph thực nhận uint8 NHWC, FP32 bên trong; giải mã theo slot, không CTC."
+    },
+    {
+      "name": "LPRNet_VN",
+      "family": "lprnet",
+      "repository": "lephamcong/PBL4_Deep-Learning",
+      "revision": "054cc054cdc2b24305f3675a9c14832459c8f9db",
+      "chars": "0123456789ABCDEFGHJKLMNPQRSTUVWXYZIO-",
+      "weights": {
+        "filename": "LPRNet_Pytorch_VietNam.pth",
+        "url": "https://raw.githubusercontent.com/lephamcong/PBL4_Deep-Learning/054cc054cdc2b24305f3675a9c14832459c8f9db/LPRNet_Pytorch_VietNam/model_trained/LPRNet_Pytorch_VietNam.pth",
+        "sha256": "d656ed368bed61aec9f9903ff73fbfe49e552e8a223d28f2c78ed4ffb712bab1"
+      },
+      "image_size": [
+        24,
+        94
+      ],
+      "training_evidence": "https://github.com/lephamcong/PBL4_Deep-Learning/blob/054cc054cdc2b24305f3675a9c14832459c8f9db/readme.md",
+      "inference_source": "https://github.com/lephamcong/PBL4_Deep-Learning/blob/054cc054cdc2b24305f3675a9c14832459c8f9db/LPRNet_Pytorch_VietNam/predict_single_image.py",
+      "notes": "Trọng số nhánh VietNam riêng; tác giả mô tả 12320 ảnh train, 1000 ảnh đánh giá. BGR, (pixel-127.5)/128; blank ở cuối charset."
+    },
+    {
+      "name": "YOLOv5n_VN_Chars",
+      "family": "yolov5",
+      "repository": "trungdinh22/License-Plate-Recognition",
+      "revision": "0b08d1ad9d3da5b0569243a77f068138678f516b",
+      "chars": "123456789ABCDEFGHKLMNPSTUVXYZ0",
+      "weights": {
+        "filename": "LP_ocr_nano_62.pt",
+        "url": "https://raw.githubusercontent.com/trungdinh22/License-Plate-Recognition/0b08d1ad9d3da5b0569243a77f068138678f516b/model/LP_ocr_nano_62.pt",
+        "sha256": "63d5f84e90daa87e5794347d782bda23a562948c9d198fe9444ca526c5904606"
+      },
+      "image_size": 640,
+      "confidence": 0.6,
+      "iou": 0.45,
+      "max_det": 1000,
+      "training_evidence": "https://github.com/trungdinh22/License-Plate-Recognition/blob/0b08d1ad9d3da5b0569243a77f068138678f516b/README.md",
+      "inference_source": "https://github.com/trungdinh22/License-Plate-Recognition/blob/0b08d1ad9d3da5b0569243a77f068138678f516b/function/helper.py",
+      "notes": "OCR ký tự Việt Nam một/hai dòng; charset lấy từ checkpoint 30 lớp, không dùng nhầm YAML 36 lớp. Dùng nhánh OCR trên ảnh biển đã crop, không chạy detector xe/biển."
+    },
+    {
+      "name": "YOLOv5m_VN_Chars",
+      "family": "yolov5",
+      "repository": "trungdinh22/License-Plate-Recognition",
+      "revision": "0b08d1ad9d3da5b0569243a77f068138678f516b",
+      "chars": "123456789ABCDEFGHKLMNPSTUVXYZ0",
+      "weights": {
+        "filename": "LP_ocr.pt",
+        "url": "https://raw.githubusercontent.com/trungdinh22/License-Plate-Recognition/0b08d1ad9d3da5b0569243a77f068138678f516b/model/LP_ocr.pt",
+        "sha256": "51eb2080e1dede762d9735686d55ada288fdf61a666af03af58e72bdf8291e59"
+      },
+      "image_size": 640,
+      "confidence": 0.6,
+      "iou": 0.45,
+      "max_det": 1000,
+      "training_evidence": "https://github.com/trungdinh22/License-Plate-Recognition/blob/0b08d1ad9d3da5b0569243a77f068138678f516b/README.md",
+      "inference_source": "https://github.com/trungdinh22/License-Plate-Recognition/blob/0b08d1ad9d3da5b0569243a77f068138678f516b/function/helper.py",
+      "notes": "OCR ký tự Việt Nam một/hai dòng; charset lấy từ checkpoint 30 lớp, không dùng nhầm YAML 36 lớp. Dùng nhánh OCR trên ảnh biển đã crop, không chạy detector xe/biển."
+    },
+    {
+      "name": "YOLOv8n_VN_Chars",
+      "family": "yolov8",
+      "repository": "phatnomenal/Vietnamese-License-Plate-Detecttion",
+      "revision": "e94ca8f92dfc0e5ced00a3ec70e0c0ff303a7c6f",
+      "chars": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "weights": {
+        "filename": "Letters_detection.pt",
+        "url": "https://raw.githubusercontent.com/phatnomenal/Vietnamese-License-Plate-Detecttion/e94ca8f92dfc0e5ced00a3ec70e0c0ff303a7c6f/models/Letters_detection.pt",
+        "sha256": "1cfbf438061517aa47fd37f6f256305e5e7e68fe1dff0ad679f3201ae1189820"
+      },
+      "image_size": 640,
+      "confidence": 0.4,
+      "iou": 0.7,
+      "max_det": 300,
+      "training_evidence": "https://github.com/phatnomenal/Vietnamese-License-Plate-Detecttion/blob/e94ca8f92dfc0e5ced00a3ec70e0c0ff303a7c6f/README.md",
+      "inference_source": "https://github.com/phatnomenal/Vietnamese-License-Plate-Detecttion/blob/e94ca8f92dfc0e5ced00a3ec70e0c0ff303a7c6f/models/implement_upgrade.py",
+      "notes": "Checkpoint cho 36 lớp ký tự trên biển Việt Nam; version nguồn 8.3.229. Giữ ngưỡng chia tầng 15 pixel của nguồn; không sửa nhầm chữ theo vị trí."
+    }
+  ]
+}

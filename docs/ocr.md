@@ -11,6 +11,7 @@ Dataset đã là ảnh biển. Luồng này không cần YOLO, video, tracking h
 | VietLPR_v1 | [vietdai-bk/VietLPR_v2](https://github.com/vietdai-bk/VietLPR_v2) | commit `ff3a6b3d65b64463ae61b251abb9e117c3e0ea56` |
 | VietLPR_v2 | `VietLPR_v2_colab.ipynb` đã cung cấp | SHA256 `aafe7b2f63c0c6346ac00f807c96ee249de186e37021a0d0c81daf915f2adbed` |
 | 7 bản PaddleOCR | V4 server/mobile, V5 server/mobile, V6 medium/small/tiny | URL/revision/SHA từng DET/REC trong `configs/ocr/paddle_suite.json` |
+| 5 pretrained biển Việt Nam | CCT-S, LPRNet, YOLOv5n/m, YOLOv8n OCR ký tự | Nguồn train/weights và SHA trong `configs/ocr/public_vn.json` |
 
 `configs/ocr/sources.json` ghi nguồn VietLPR và commit PaddleX dùng cho tiền/hậu xử lý.
 
@@ -50,7 +51,7 @@ Không tự sửa O→0, không bỏ ảnh không detect được khi chấm đi
 - V1 thêm ONNX bằng phép mean tương đương adaptive pooling; V2 gộp RepConv và xuất batch động như notebook.
 - Báo cáo chung dùng ACC/CER theo toàn chuỗi biển và CER tổng số lỗi/tổng ký tự. Đây là cách chấm chung, không đổi tiêu chí chọn best riêng của nguồn.
 
-Log val V1 hiển thị acc/cer dạng phần trăm; V2 dạng 0–1 theo nguồn. Bảng tổng hợp chín hệ thống dùng phần trăm.
+Log val V1 hiển thị acc/cer dạng phần trăm; V2 dạng 0–1 theo nguồn. Bảng tổng hợp 14 hệ thống dùng phần trăm.
 Batch benchmark là **một ảnh biển**. V2 nhận dạng cùng lúc các dòng của ảnh đó; metadata ghi rõ `rec_batching`.
 Đây là triển khai theo logic nguồn trên dataset/phần cứng của dự án, không hứa trọng số hoặc ACC giống tác giả.
 
@@ -58,11 +59,12 @@ Batch benchmark là **một ảnh biển**. V2 nhận dạng cùng lúc các dò
 
 1. `01_prepare_dataset.ipynb`: chuẩn hoá và kiểm tra dữ liệu, kernel `.venv`.
 2. `02_train_vietlpr.ipynb`: kiểm source/config, train/val và export V1/V2, kernel `.venv-ocr`.
-3. `03_evaluate_models.ipynb`: chuẩn bị Paddle pretrained, chốt val, test CPU và xếp hạng chín hệ thống.
+3. `03_evaluate_models.ipynb`: chuẩn bị pretrained, chốt val, test CPU và xếp hạng 14 hệ thống.
 
 Notebook 02 mặc định `RUN_TRAINING=False`, `RUN_EXPORT=False`, `RUN_SMOKE=False`.
 Bật tác vụ cần chạy. Train và smoke dùng GPU CUDA; export dùng best đã chọn theo nguồn.
-Notebook 03 mặc định `RUN_EVALUATION=False`, chỉ đọc các kết quả đã lưu. Bật để chuẩn bị/tiếp tục đo;
+Notebook 03 mặc định `RUN_EVALUATION=False`, `RUN_PUBLIC_VN=False`, chỉ đọc các kết quả đã lưu.
+Bật `RUN_PUBLIC_VN` để chỉ chạy năm pretrained Việt Nam; `RUN_EVALUATION` chạy toàn bộ. Bật để chuẩn bị/tiếp tục đo;
 `RECALIBRATE=True` nếu cần chọn lại hậu xử lý trên val. Không dùng test để chọn ngưỡng.
 
 VietLPR nằm trong `runs/<model>/onnx/`; bảy bản Paddle nằm trong `runs/paddle_suite/<tên>/onnx/`.
@@ -96,11 +98,12 @@ Torch 2.7.1+cu126 trong `.venv-ocr`; Paddle GPU 2.6.2.post120 trong `.venv-ocr-p
 | `paddle_suite.py`, `paddle_suite_convert.py` | Chuẩn bị bảy bản Paddle, chuyển V4 sang ONNX và đối chiếu số học |
 | `paddle_pretrained.py` | Giải nén đúng hai file inference từ gói V4 |
 | `evaluate.py` | Tune val, khoá và test VietLPR V1/V2 |
-| `comparison.py` | Kiểm và xếp hạng kết quả của chín hệ thống |
+| `comparison.py` | Kiểm và xếp hạng kết quả của 14 hệ thống |
+| `public_vn.py`, `public_vn_export.py`, `public_vn_runtime.py` | Chuẩn bị và đo pretrained chuyên biển Việt Nam |
 | `notebook.py`, `run_state.py` | Log notebook, tiếp tục hoặc lưu lượt cũ |
 | `tests/ocr/test_upstream_parity.py` | Kiểm mã đã tách, crop, mask, EMA và batch theo nguồn |
 
-`runs/comparison_ranked.csv`: **Rank | Model | ACC | CER | Speed | FPS | Speedup**. Speed gồm DET, hậu xử lý, crop, REC và decode;
+`runs/comparison_ranked.csv`: **Rank | Model | ACC | CER | Speed | FPS | Speedup**. Speed gồm toàn bộ xử lý từ ảnh biển đến chuỗi;
 không tính đọc ảnh, load model hoặc vẽ. FPS=1000/Speed; Speedup lấy model chậm nhất làm mốc 1×.
 
 ## So sánh bảy bản PaddleOCR
@@ -158,7 +161,7 @@ Khoá tiến trình tránh hai cell cùng đo một model. Có đủ 5 số đo 
 
 ## Bảng tổng hợp
 
-`ocr/comparison.py` đọc và kiểm tra kết quả của 7 bản Paddle cùng V1/V2, đối chiếu dự đoán/số đo gốc,
+`ocr/comparison.py` đọc và kiểm tra kết quả của 7 bản Paddle, V1/V2 và 5 pretrained chuyên biển Việt Nam, đối chiếu dự đoán/số đo gốc,
 kiểm checksum model và điều kiện CPU trước khi ghép bảng. Rank theo ACC giảm dần, CER tăng dần, rồi Speed tăng dần.
 Speedup = Speed của model chậm nhất / Speed của model đang xét. Model chậm nhất có Speedup 1×.
 Đây là so sánh các hệ thống với pipeline/nguồn khởi tạo riêng, không phải chỉ so kiến trúc.
@@ -168,6 +171,8 @@ Speedup = Speed của model chậm nhất / Speed của model đang xét. Model 
 ```
 
 Kết quả được ghi vào `runs/comparison_ranked.csv`. Code và cấu hình baseline English REC đã được gỡ;
-bảng chính chỉ đọc kết quả của chín hệ thống hiện tại.
+bảng chính chỉ đọc kết quả của 14 hệ thống hiện tại.
 Bảng riêng bảy bản Paddle ở `runs/paddle_suite/comparison.csv`.
 Model, checkpoint, số đo và log của lượt hiện tại nằm trong `runs/`; hồ sơ sửa dataset v2 nằm trong `runs/data_corrections/`.
+Nguồn đã rà, các ứng viên bị loại và cách chạy nhóm mới: [public_vn_ocr.md](public_vn_ocr.md).
+CCT/LPRNet đọc toàn biển, YOLO OCR đọc ký tự; không thêm box GT hoặc model DET dòng để ép cùng kiến trúc.

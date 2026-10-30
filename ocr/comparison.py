@@ -1,4 +1,4 @@
-"""Ghép kết quả đã đo, kiểm điều kiện và xếp hạng chín hệ thống OCR."""
+"""Kiểm kết quả đã đo và xếp hạng các hệ thống OCR trên cùng ảnh biển."""
 
 import csv
 import math
@@ -16,17 +16,36 @@ CONDITIONS = (
     "batch_size", "batch_unit", "precision", "runtime", "provider", "platform",
     "processor", "warmup", "repeats", "timing_scope",
 )
+FULL_PIPELINE_SCOPES = {
+    "preprocess+DET+postprocess+crop+REC+decode; excludes disk IO and model load",
+    "plate image to final text; excludes disk IO and model load",
+}
 
 
 def check_conditions(results):
     if not results:
         raise ValueError("Chưa có kết quả để so sánh")
     for key in CONDITIONS:
-        if len({str(result[key]) for result in results}) != 1:
+        values = {str(result[key]) for result in results}
+        # So toàn luồng từ cùng ảnh biển; model đọc toàn biển không cần DET dòng.
+        if key == "timing_scope" and values.issubset(FULL_PIPELINE_SCOPES):
+            continue
+        if len(values) != 1:
             raise ValueError(f"Điều kiện đo khác nhau: {key}")
 
 
-def collect_results():
+def check_measurements(result, details, test):
+    if [(row["image"], row["GT"]) for row in details] != [(row["relative"], row["text"]) for row in test]:
+        raise ValueError(f"Danh sách ảnh/nhãn test không khớp: {result['Model']}")
+    if any(len(row["times_ms"]) != result["repeats"] for row in details):
+        raise ValueError(f"Chưa đủ số lượt đo: {result['Model']}")
+    scores = text_scores([row["prediction"] for row in details], [row["GT"] for row in details])
+    scores.update(speed_scores([time for row in details for time in row["times_ms"]]))
+    if any(not math.isclose(value, result[key], rel_tol=1e-10, abs_tol=1e-10) for key, value in scores.items()):
+        raise ValueError(f"Chỉ số khác dự đoán hoặc số đo gốc: {result['Model']}")
+
+
+def collect_results(include_public=True):
     catalog = paddle_suite.load_catalog()
     val = read_split(catalog["dataset"], "val", "det")
     test = read_split(catalog["dataset"], "test", "det")
@@ -57,15 +76,25 @@ def collect_results():
         if result["artifact_sha256"] != expected:
             raise ValueError(f"Kết quả không thuộc model đã chốt: {name}")
         details = paddle_suite.read_json(directory / "test_predictions.json")
-        if [(row["image"], row["GT"]) for row in details] != [(row["relative"], row["text"]) for row in test]:
-            raise ValueError(f"Danh sách ảnh/nhãn test không khớp: {name}")
-        if any(len(row["times_ms"]) != result["repeats"] for row in details):
-            raise ValueError(f"Chưa đủ số lượt đo: {name}")
-        scores = text_scores([row["prediction"] for row in details], [row["GT"] for row in details])
-        scores.update(speed_scores([time for row in details for time in row["times_ms"]]))
-        if any(not math.isclose(value, result[key], rel_tol=1e-10, abs_tol=1e-10) for key, value in scores.items()):
-            raise ValueError(f"Chỉ số khác dự đoán hoặc số đo gốc: {name}")
+        check_measurements(result, details, test)
         results.append(result)
+    if include_public:
+        from . import public_vn
+
+        public_catalog = public_vn.load_catalog()
+        for v in public_catalog["variants"]:
+            name = v["name"]
+            directory = public_vn.run_dir(public_catalog, name)
+            frozen = public_vn.validate_frozen(public_catalog, name, val)
+            result = paddle_suite.read_json(directory / "test_result.json")
+            if (result["Model"] != name or result["test_signature"] != test_signature
+                    or result["val_signature"] != frozen["val_signature"]
+                    or result["code_signature"] != public_vn.code_signature()
+                    or result["profile"] != frozen["profile"]
+                    or result["artifact_sha256"] != frozen["artifacts"]):
+                raise ValueError(f"Kết quả không khớp model công khai đã chốt: {name}")
+            check_measurements(result, paddle_suite.read_json(directory / "test_predictions.json"), test)
+            results.append(result)
     check_conditions(results)
     return results
 

@@ -4,6 +4,9 @@ Chuẩn hoá dataset biển số Việt Nam, train/inference theo nguồn VietLP
 
 Luồng chính: **Chuẩn hoá DET/REC → Train VietLPR → Evaluation → Bảng xếp hạng**.
 
+Nhóm chính gồm **VietLPR V1/V2 và 7 bản PaddleOCR**. Năm model public bổ sung chỉ dùng làm đối chứng khi test;
+không tích hợp vào luồng train hoặc inference chính. Code nguồn tải về để nạp/chuyển model và trọng số nằm trong `runs/`, không đưa lên Git.
+
 ## Bắt đầu từ đâu?
 
 | Giai đoạn | Notebook | Kernel |
@@ -15,7 +18,7 @@ Luồng chính: **Chuẩn hoá DET/REC → Train VietLPR → Evaluation → Bả
 Trên máy đã có kết quả: mở notebook **03** và chạy từ đầu. Mặc định chỉ đọc kết quả đã lưu.
 Khi mới clone, cần train/export V1/V2 và bật evaluation để tạo kết quả; trọng số và số đo không đi kèm repository.
 Sau khi đổi cấu trúc, chọn lại đúng kernel và **Restart Kernel** trước khi chạy notebook mới.
-Notebook **02** có cờ `RUN_TRAINING`, `RUN_EXPORT`, `RUN_SMOKE`; notebook **03** có `RUN_EVALUATION` và `RECALIBRATE`.
+Notebook **02** có cờ `RUN_TRAINING`, `RUN_EXPORT`, `RUN_SMOKE`; notebook **03** có `RUN_EVALUATION`, `RUN_PUBLIC_VN` và `RECALIBRATE`.
 Bật đúng tác vụ cần thực hiện. Paddle được chuẩn bị bằng pretrained, không train lại.
 
 ## Cấu trúc dự án
@@ -65,11 +68,13 @@ Train/evaluation dùng trực tiếp dataset thành phẩm. Tái tạo crop từ
 | Checkpoint và export | `ocr/run_state.py`, `export.py` |
 | Inference VietLPR | `ocr/runtime.py`, `ops_v1.py`, `third_party/VietLPR_v2/inference.py` |
 | Chuẩn bị/chạy 7 bản Paddle | `ocr/paddle_suite.py`, `paddle_suite_convert.py`, `paddle_suite_runtime.py` |
+| Pretrained chuyên biển Việt Nam | `ocr/public_vn.py`, `public_vn_export.py`, `public_vn_runtime.py` |
 | Chấm điểm và bảng tổng hợp | `ocr/evaluate.py`, `metrics.py`, `comparison.py` |
 
 Mã gốc model nằm trong `third_party/`; code nối dữ liệu, môi trường và cách đo nằm trong `ocr/`.
 Manifest ghi commit/SHA để đối chiếu nguồn. V1/V2 giữ loss, augment, EMA, crop và tiêu chí chọn best theo từng nguồn.
-`configs/ocr/` gồm `vietlpr_v1.json`, `vietlpr_v2.json`, `paddle_suite.json` (7 bản Paddle) và `sources.json` (nguồn code).
+`configs/ocr/` gồm cấu hình V1/V2, `paddle_suite.json` (7 bản Paddle), `public_vn.json` (5 pretrained Việt Nam)
+và `sources.json` (nguồn code).
 
 ## Dữ liệu
 
@@ -93,16 +98,20 @@ Chi tiết định dạng và giới hạn phục hồi: [docs/dataset.md](docs/
 - VietLPR_v1: repo `vietdai-bk/VietLPR_v2`, giữ tên V1 trong dự án để phân biệt.
 - VietLPR_v2: notebook nguồn đã cung cấp, chốt bằng SHA256.
 - PP-OCRv4: server, mobile; PP-OCRv5: server, mobile; PP-OCRv6: medium, small, tiny.
+- Pretrained chuyên biển Việt Nam: CCT-S VN, LPRNet VN, YOLOv5n/m và YOLOv8n OCR ký tự.
 
-Bảng chính gồm **9 hệ thống**: `Rank | Model | ACC | CER | Speed | FPS | Speedup`.
+Bảng chính gồm **14 hệ thống**: `Rank | Model | ACC | CER | Speed | FPS | Speedup`.
 Rank theo **ACC giảm dần → CER tăng dần → Speed tăng dần**. Model chậm nhất làm mốc **Speedup 1×**.
 
-Đo toàn bộ DET → crop → REC trên cùng 124 ảnh test bằng ONNX FP32, CPU 4 luồng, OpenCV 1 luồng,
-batch một ảnh biển, warm-up 20 và đo 5 lượt. ACC/CER tính toàn chuỗi biển sau chuẩn hoá; ảnh không detect được vẫn tính lỗi.
-Speed loại thời gian đọc ổ đĩa và tải model. V2 gom các dòng trong cùng ảnh vào một batch REC; các hệ thống còn lại chạy tuần tự.
+Đo toàn bộ xử lý từ cùng 124 ảnh biển test đến chuỗi cuối bằng ONNX FP32, CPU 4 luồng, OpenCV 1 luồng,
+batch một ảnh biển, warm-up 20 và đo 5 lượt. ACC/CER tính toàn chuỗi; ảnh không đọc được vẫn tính lỗi.
+VietLPR/Paddle chạy DET dòng → crop → REC; CCT/LPRNet đọc toàn biển; các bản YOLO OCR phát hiện và sắp ký tự.
+Không dùng box GT để hỗ trợ suy luận. Speed loại thời gian đọc ổ đĩa và tải model. V2 gom các dòng trong cùng ảnh vào một batch REC.
 Đây là kết quả trên laptop với các pipeline/nguồn khởi tạo riêng; Speed có dao động giữa các lượt.
 
-`runs/comparison_ranked.csv` là bảng tổng hợp. Dự đoán và số đo từng ảnh nằm trong `runs/<model>/` hoặc `runs/paddle_suite/<tên>/`.
+`runs/comparison_ranked.csv` là bảng tổng hợp. Kết quả nằm trong `runs/<model>/`, `runs/paddle_suite/<tên>/`
+và `runs/public_vn_ocr/<tên>/`. Chín model gốc giữ nguyên kết quả khi bổ sung năm model public.
+Nguồn và lý do nhận/loại ứng viên: [docs/public_vn_ocr.md](docs/public_vn_ocr.md).
 Hướng dẫn source, train/resume, export và evaluation: [docs/ocr.md](docs/ocr.md).
 
 ## Môi trường và kiểm thử

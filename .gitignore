@@ -11,9 +11,8 @@ __pycache__/
 /vn-plate-dataset_v2/
 /sources/
 
-# Chỉ đưa ZIP dataset v2 đã chốt lên Git.
+# Bản đóng gói dữ liệu giữ riêng ngoài Git.
 *.zip
-!/vn-plate-dataset_v2.zip
 *.tar
 *.tar.gz
 *.tgz

@@ -38,13 +38,13 @@ runs/                      Checkpoint, ONNX, log, số đo và kết quả
 ```
 
 Các thư mục dữ liệu và `runs/` giữ đường dẫn ổn định cho recipe/checkpoint hiện có.
-Repository lưu code, cấu hình, metadata và **ZIP dataset v2**. Thư mục ảnh đã giải nén, `sources/`, môi trường Python,
+Repository lưu code, cấu hình và metadata. ZIP dataset, thư mục ảnh đã giải nén, `sources/`, môi trường Python,
 trọng số và kết quả trong `runs/` được Git bỏ qua.
 
-## Dataset đi kèm
+## Chuẩn bị dataset
 
-[vn-plate-dataset_v2.zip](vn-plate-dataset_v2.zip) chứa đầy đủ ảnh và nhãn DET/REC cho train, val, test.
-Sau khi clone, giải nén tại thư mục gốc:
+Dataset được lưu và chia sẻ riêng, không đi kèm khi clone repository.
+Đặt file `vn-plate-dataset_v2.zip` đã nhận vào thư mục gốc rồi giải nén:
 
 ```powershell
 Expand-Archive -LiteralPath .\vn-plate-dataset_v2.zip -DestinationPath .

@@ -1,0 +1,203 @@
+{
+  "method": "visual review of full image and plate crops; phash<=4 candidates; no OCR GT invented",
+  "source": "Vietnamese-License-Plate-1",
+  "identity_leakage_certified": false,
+  "groups": [
+    {
+      "keep_split": "val",
+      "members": [
+        {
+          "split": "train",
+          "family": "carlong_0500_png"
+        },
+        {
+          "split": "train",
+          "family": "carlong_0638_png"
+        },
+        {
+          "split": "val",
+          "family": "carlong_0637_png"
+        }
+      ],
+      "source_images": {
+        "carlong_0500_png.rf.b93aff325d0d9845235a0f49ea75da9a.jpg": "af956f1679a3128d1f23a34ee0ff4a5b29077bf136ec909787e87c18aff5a51c",
+        "carlong_0500_png.rf.e5571ba1a6bfe1fec82a414063f4352d.jpg": "8d15ccb9e101aab1e8feedcc1c5b03f74057e96b6a0cc656d6c663c55ff648b3",
+        "carlong_0638_png.rf.500e07f42371a7a43607d19697352305.jpg": "0db9646cff8c0e73e7a8010adedff866ab71089d9d83076af1746dc86d483049",
+        "carlong_0638_png.rf.c2fe02264b597b5c2598dd1fb44d65bf.jpg": "31904ff23eec86c12db88002910d83a88831340d2de313e11d2bfb5be44364e7",
+        "carlong_0637_png.rf.246f76f166285447355014713e89779e.jpg": "bba676acb7f3f82f513640270e8b768a25d03b7d2f1df1010516e20167a8c386"
+      }
+    },
+    {
+      "keep_split": "val",
+      "members": [
+        {
+          "split": "train",
+          "family": "carlong_0231_png"
+        },
+        {
+          "split": "val",
+          "family": "carlong_0459_png"
+        }
+      ],
+      "source_images": {
+        "carlong_0231_png.rf.6b4f6898d0fc7aae1a1d1e551d8607d3.jpg": "46c72140d5d0e42d1740c58b588bfc86c2f1c62b561c0686ab2773b8ae841805",
+        "carlong_0231_png.rf.d28d18e766afbfdc9256e1c5d06720dd.jpg": "3dc152e3c5fe75b7b5880ab6b4ec47a93ac95ecd56a47444471d39160ebe3faa",
+        "carlong_0459_png.rf.360f7e102969c77c6db686bff195a00e.jpg": "8051533ea45b25ea2dd94c56e3bd83ec0556c81da036f337dbefdefd2c329a6c"
+      }
+    },
+    {
+      "keep_split": "test",
+      "members": [
+        {
+          "split": "train",
+          "family": "carlong_0072_png"
+        },
+        {
+          "split": "val",
+          "family": "carlong_0680_png"
+        },
+        {
+          "split": "test",
+          "family": "carlong_0948_png"
+        },
+        {
+          "split": "val",
+          "family": "carlong_0553_png"
+        }
+      ],
+      "source_images": {
+        "carlong_0072_png.rf.99c6ce549b67a294643efb9f690ad4a5.jpg": "f2b9ec4a41c63cdc5aaccac2ea193e6899f121ef8dfed21613722d321d2cea89",
+        "carlong_0072_png.rf.e1642d5cb0fdc90780ecf6341e7fee3c.jpg": "db058a2dc510b07497c2128e61b036451e649b3f7c7ab9212db1dac1d1308c1a",
+        "carlong_0680_png.rf.65e1f404a75ebdb1c71c1230082ff686.jpg": "87d20815ebeeffe143b9935d3690883a45f74db49ac5d41c1d89c4dd5f29464d",
+        "carlong_0553_png.rf.c10f7b9471bf9cccea68d75465374877.jpg": "fad4ca58e4191abe213513c516bfea2ac69800bdbe8532b3849ad80ea2cbdfd7",
+        "carlong_0948_png.rf.0171641d96cbffefd4fc84b932199dfb.jpg": "b86db25e62022e7dcd8cc718f941590c85654938c6a6b5d46ff2a74b70d33fd0"
+      }
+    },
+    {
+      "keep_split": "val",
+      "members": [
+        {
+          "split": "train",
+          "family": "carlong_0598_png"
+        },
+        {
+          "split": "val",
+          "family": "carlong_0982_png"
+        }
+      ],
+      "source_images": {
+        "carlong_0598_png.rf.2c83583c56c942561d96a5a5fcf921ee.jpg": "64e01f854641e59f002bf021a2fa6c3ef3f4fc4e6853cd475348c6e550312f5d",
+        "carlong_0598_png.rf.e5a1e18245ed26342b61cf37f4564700.jpg": "e9b0d3b9ed1556f75e2d5f0bc947fd0c98c94d666b72f70d3caacee875448ce1",
+        "carlong_0982_png.rf.a06e4e526bb686b06fd676c00a75011c.jpg": "4fe407a8a52fc89ec3b27420d3c1cbd0e6df7f93569bb24c51cd41560b567a38"
+      }
+    },
+    {
+      "keep_split": "val",
+      "members": [
+        {
+          "split": "train",
+          "family": "carlong_0495_png"
+        },
+        {
+          "split": "val",
+          "family": "carlong_0119_png"
+        }
+      ],
+      "source_images": {
+        "carlong_0495_png.rf.022c4b8ea3e4dfb20b38e5f144e74bb5.jpg": "f9f22fe981a49d7c942571b4c44a59f09fef308082f9e59f949c8900beb6a1aa",
+        "carlong_0495_png.rf.65d09cdedc27bc1d80dcb6e019f82f87.jpg": "547445e293822a5ac18019ff64e2311c778999afeb1b4cc0efffd931b846ae00",
+        "carlong_0119_png.rf.f10df19de8fdd8602ed00319204ee0fd.jpg": "7cbc1ac6e7b260dc221ae03b986c0333ecbc6294e6e4eb3e3f280264dc19255f"
+      }
+    },
+    {
+      "keep_split": "val",
+      "members": [
+        {
+          "split": "train",
+          "family": "carlong_0464_png"
+        },
+        {
+          "split": "val",
+          "family": "carlong_0087_png"
+        }
+      ],
+      "source_images": {
+        "carlong_0464_png.rf.b3fc1faca2d0c248b200ee1d795e5f24.jpg": "cd87c56cf58bdbac6be573f3f02da1bcb94447b1761965a4c7c095f5d40d7986",
+        "carlong_0464_png.rf.bdecd1cd3343086d0c0ab517ea4e908d.jpg": "355ecb7ad918a09bf44fbae7b34546fe7d31bfd750919ae1742caf0d7419f536",
+        "carlong_0087_png.rf.7ad2b4bbe82327dabbbb2d39fba59e7c.jpg": "33fe2611d8be4bff66495792f1e75212d7d8bf120e87c23d1fcef53d170ea974"
+      }
+    },
+    {
+      "keep_split": "test",
+      "members": [
+        {
+          "split": "test",
+          "family": "carlong_0804_png"
+        },
+        {
+          "split": "train",
+          "family": "carlong_0806_png"
+        }
+      ],
+      "source_images": {
+        "carlong_0806_png.rf.0596258832db63f02936ffde1dde5e4f.jpg": "fd57504324d17e7d19d351cb17fced0fed41c1dae46b22858b5a83ca762f87a1",
+        "carlong_0806_png.rf.7bae0fdee7d019568d2f1d047c464d3f.jpg": "c75049f1951b647bbcc5d4167b49d50763879e3614222cf2299994fa6bfa3c53",
+        "carlong_0804_png.rf.f12d064a5af6fdd86cd8764a076e99f4.jpg": "d74a5cc87aafe7abc7b310f354ffdff3284e5b01bb4b3427a4ea376ed500f8be"
+      }
+    },
+    {
+      "keep_split": "test",
+      "members": [
+        {
+          "split": "test",
+          "family": "carlong_0795_png"
+        },
+        {
+          "split": "train",
+          "family": "carlong_0511_png"
+        }
+      ],
+      "source_images": {
+        "carlong_0511_png.rf.720e7d4964266a1b6556725761e56943.jpg": "cbd85d7937ecdef3625087945aeb540affe7ed213fbdc415bb4693ceae0559be",
+        "carlong_0511_png.rf.bdb447abe8f4b571d70f9b86ddd7ceaa.jpg": "539f2cb640b26ce6af9068cc3ccfad1f4448fbeddce5810e27fe27f1a81886f3",
+        "carlong_0795_png.rf.b2ad55d21d44ea8be7b0e060638ae915.jpg": "32ca8fcd828553b026f98692b98515d39190bfe4d5b3048f0b61e0459af42cda"
+      }
+    },
+    {
+      "keep_split": "val",
+      "members": [
+        {
+          "split": "train",
+          "family": "carlong_0280_png"
+        },
+        {
+          "split": "val",
+          "family": "carlong_0075_png"
+        }
+      ],
+      "source_images": {
+        "carlong_0280_png.rf.956b64ea8d23fa4f9907ab7870ca17d0.jpg": "603a2e630050d243556efd247ed75d0e71459411ff37303dfca5699d33f1e11a",
+        "carlong_0280_png.rf.a0aaf4840c5f24e1a475da7a3228900b.jpg": "4776ffe75f7a9f9f1456543c2bd11994bd7eb008d9a4b676c6c66267a38076fb",
+        "carlong_0075_png.rf.cbd4ce7b32ccf44814d2518a9f57c67a.jpg": "992b71e3d37f8239ba0ef2ded48bbed6390e42c6f24e5e9c36a90c3b13c69b01"
+      }
+    },
+    {
+      "keep_split": "val",
+      "members": [
+        {
+          "split": "train",
+          "family": "carlong_0327_png"
+        },
+        {
+          "split": "val",
+          "family": "carlong_0163_png"
+        }
+      ],
+      "source_images": {
+        "carlong_0327_png.rf.7507ab7a04ed071d38ac75983c8ce6e2.jpg": "1968694878164a8fceed314e35609659e1fbe7ded304dcb5e72d7f398b4d2deb",
+        "carlong_0327_png.rf.9e0bbeb2b2c281574f5a497bc55f1d2a.jpg": "867dc12ca9cc3b8d7c41345a1a288febb2fa47a644b645f5615ea114bff3d2f3",
+        "carlong_0163_png.rf.c9c55617eabf7f85f9e0cb3675282149.jpg": "0bec115d6aed720487b4fc34551342e02556db5068e97efae8adbc3c90cd13a2"
+      }
+    }
+  ]
+}

@@ -22,8 +22,8 @@ from ocr.runtime import (
     source_v2_runtime,
     postprocess_candidates,
 )
-from ocr.train_torch import v1_dataset, task_rows
-from ocr.upstream import v1_modules, v2_source
+from ocr.train_torch import task_rows
+from ocr.upstream import v2_source
 from ocr import evaluate
 
 
@@ -114,41 +114,6 @@ class SourceParityTests(unittest.TestCase):
             manifest["inference_sha256"],
         )
 
-    def test_v1_mask_and_inputs_come_from_original_dataset(self):
-        cfg = load_config("vietlpr_v1")
-        source, _ = v1_modules()
-        with tempfile.TemporaryDirectory() as temp:
-            cfg["dataset"] = temp
-            base = Path(temp) / "val/det"
-            (base / "images").mkdir(parents=True)
-            cv2.imwrite(str(base / "images/a.jpg"), np.full((50, 90, 3), 180, np.uint8))
-            objects = [{"points": [[2, 3], [85, 2], [84, 25], [2, 26]], "transcription": "16M9"}]
-            (base / "det_labels.txt").write_text(
-                "images/a.jpg\t" + json.dumps(objects) + "\n", encoding="utf-8"
-            )
-            actual = v1_dataset(cfg, "val", "det", 2)[0]
-            expected = source.DetDataset(
-                str(base / "det_labels.txt"), str(base / "images"), cfg["model"]["det_size"], False
-            )[0]
-            for a, b in zip(actual, expected):
-                torch.testing.assert_close(a, b, rtol=0, atol=0)
-        self.assertEqual(cfg["chars"], "".join(source.CHAR2LABEL))
-
-    def test_v1_crop_matches_original_warp_and_letterbox(self):
-        cfg = load_config("vietlpr_v1")
-        v1_modules()
-        from vietlpr.utils import warp_crop, letterbox_resize
-
-        image = np.random.default_rng(3).integers(0, 256, (61, 130, 3), np.uint8)
-        quad = np.float32([[6, 8], [120, 4], [121, 49], [5, 55]])
-        expected = (
-            letterbox_resize(warp_crop(image, quad), (128, 32))
-            .transpose(2, 0, 1)[None]
-            .astype(np.float32)
-            / 255
-        )
-        np.testing.assert_array_equal(crop_line(image, quad, cfg), expected)
-
     def test_v2_full_quad_and_stretch_match_training_source(self):
         cfg = load_config("vietlpr_v2")
         self.assertEqual(cfg["model"]["rec_resize"], "stretch")
@@ -228,8 +193,8 @@ class SourceParityTests(unittest.TestCase):
         np.testing.assert_array_equal(jitter.call_args.args[0], predicted)
         self.assertEqual(jitter.call_args.kwargs["p"], 0.5)
 
-    def test_source_tune_grid_does_not_add_v1_search_or_last_checkpoints(self):
-        self.assertEqual(len(postprocess_candidates(load_config("vietlpr_v1"))), 1)
+    def test_public_name_alias_uses_the_retained_notebook_architecture_and_grid(self):
+        self.assertEqual(load_config("vietlpr_v1")["name"], "vietlpr_v2")
         grid = postprocess_candidates(load_config("vietlpr_v2"))
         expected = {
             (th, uc, bt, px)

@@ -6,13 +6,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 SOURCE_CHARS = "0123456789ABCDEFGHJKLMNPRSTUVXYZ"
-NAMES = ("vietlpr_v1", "vietlpr_v2")
+NAMES = ("vietlpr_v2",)  # Mã nguồn/checkpoint notebook; tên công bố hiện tại VietLPR_v1.
 
 
 def load_config(name_or_path):
     path = Path(name_or_path)
     if not path.is_file():
-        path = ROOT / "configs/ocr" / f"{name_or_path}.json"
+        name = "vietlpr_v2" if path.stem == "vietlpr_v1" else str(name_or_path)
+        path = ROOT / "configs/ocr" / f"{name}.json"
     cfg = json.loads(path.read_text(encoding="utf-8"))
     if cfg["name"] not in NAMES or cfg["chars"] != SOURCE_CHARS:
         raise ValueError("Tên hệ thống hoặc bộ ký tự không hợp lệ")

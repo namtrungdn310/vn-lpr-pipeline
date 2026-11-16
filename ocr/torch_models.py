@@ -1,30 +1,13 @@
-"""Nạp đúng hai kiến trúc VietLPR; dùng chung bộ ký tự của v2."""
-
-import importlib
-import sys
+"""Kiến trúc notebook đã chốt; công bố với tên VietLPR_v1."""
 
 import torch
 from torch import nn
 
-from .config import ROOT
-
 
 def build_model(cfg, task):
     p = cfg["model"]
-    if cfg["name"] == "vietlpr_v1":
-        source = ROOT / "third_party/VietLPR_v1"
-        if not (source / "vietlpr/models.py").is_file():
-            raise FileNotFoundError("Chạy python -m ocr.bootstrap trước")
-        sys.path.insert(0, str(source))
-        models = importlib.import_module("vietlpr.models")
-        if task == "det":
-            return models.TinyDBNet(alpha=p["det_alpha"])
-        return models.TinyCRNN(
-            len(cfg["chars"]) + 1,
-            alpha=p["rec_alpha"],
-            hidden_size=p["rec_hidden"],
-            dropout=p.get("rec_dropout", 0.1),
-        )
+    if cfg["name"] != "vietlpr_v2":
+        raise ValueError("Kiến trúc VietLPR cũ không còn được train/export")
     from third_party.VietLPR_v2.models import FastDBNet, FastCRNN
 
     if task == "det":
@@ -41,18 +24,12 @@ def build_model(cfg, task):
 
 
 class DeployModel(nn.Module):
-    """Gắn sigmoid/softmax vào ONNX; pooling v1 đổi sang phép mean tương đương."""
+    """Gắn sigmoid/softmax vào graph FP32 theo nguồn notebook."""
 
     def __init__(self, model, cfg, task):
         super().__init__()
         self.model, self.name, self.task = model, cfg["name"], task
 
     def forward(self, x):
-        if self.name == "vietlpr_v1" and self.task == "rec":
-            x = self.model.features(x).mean(2).permute(0, 2, 1)
-            x = self.model.pre_rnn(x)
-            x, _ = self.model.rnn(x)
-            output = self.model.fc(x)
-        else:
-            output = self.model(x)
+        output = self.model(x)
         return torch.sigmoid(output) if self.task == "det" else output.softmax(-1)

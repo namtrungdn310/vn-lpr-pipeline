@@ -1,0 +1,4 @@
+# Dùng .venv-ocr; giữ nguyên Torch CUDA và thư viện OCR đã chốt.
+-r ocr-torch.txt
+torchvision==0.22.1+cu126
+ultralytics==8.4.14

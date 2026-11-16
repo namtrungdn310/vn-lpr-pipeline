@@ -1,22 +1,16 @@
 {
   "vietlpr_v1": {
-    "url": "https://github.com/vietdai-bk/VietLPR_v2",
-    "local_name": "VietLPR_v1",
-    "commit": "ff3a6b3d65b64463ae61b251abb9e117c3e0ea56",
-    "model_file": "vietlpr/models.py",
-    "notes": "Giữ luồng nguồn; dùng split cố định và batch phù hợp GPU 4 GB."
-  },
-  "vietlpr_v2": {
     "local_name": "VietLPR_v2",
     "model_file": "models.py",
     "source_notebook": "VietLPR_v2_colab.ipynb",
     "source_sha256": "aafe7b2f63c0c6346ac00f807c96ee249de186e37021a0d0c81daf915f2adbed",
-    "notes": "Tách mô hình, train/EMA và suy luận từ notebook đúng SHA; adapter nối dữ liệu và môi trường."
+    "notes": "Model notebook đã train và chốt, trước đây gọi VietLPR_v2. Kiến trúc repo VietLPR_v1 cũ đã bỏ; giữ tên thư mục nguồn để đối chiếu SHA.",
+    "public_name": "VietLPR_v1"
   },
   "public_vn": {
-    "purpose": "benchmark_only",
+    "purpose": "source_registry_and_historical_evidence",
     "models_config": "configs/ocr/public_vn.json",
-    "notes": "Trọng số public chuyên biển Việt Nam: CCT-S, LPRNet, YOLOv5n/m và YOLOv8n OCR ký tự. Bằng chứng train, commit, URL và SHA nằm trong models_config; không train lại."
+    "notes": "Registry nguồn lịch sử; LPRNet dùng trọng số/lớp nguồn để fine-tune. CCT mới dùng Keras CCT-S-v1 global theo adaptation.json; các YOLO OCR ký tự không thuộc bảng mới."
   },
   "paddle_suite": {
     "models_config": "configs/ocr/paddle_suite.json",
@@ -25,6 +19,10 @@
       "commit": "4c968d30b9d0d4a693d9eaaef0881c20f8d7d0e0",
       "manifest": "third_party/PaddleOCR_suite/source_manifest.json"
     },
-    "notes": "7 bản: v4 server/mobile, v5 server/mobile, v6 medium/small/tiny. Nguồn, revision và SHA từng DET/REC nằm trong models_config; dùng pretrained, không train lại."
+    "notes": "Tiền/hậu xử lý PaddleX được dùng lại. Catalog 7 pretrained là hồ sơ cũ; bốn bản train hiện tại nằm trong adaptation.json với nguồn PaddleOCR đã pin."
+  },
+  "adaptation": {
+    "models_config": "configs/ocr/adaptation.json",
+    "notes": "Luồng chính: giữ VietLPR đã chốt, train sáu OCR trên cùng dataset, export FP32, benchmark i5-14600KF."
   }
 }

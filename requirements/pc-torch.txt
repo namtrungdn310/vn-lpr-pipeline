@@ -1,0 +1,17 @@
+# Torch cu128 được cài riêng bởi setup_pc.ps1.
+-r ocr-cpu.txt
+torchvision==0.23.0
+keras==3.10.0
+pandas==2.2.3
+pydantic==2.11.7
+albumentations==2.0.8
+albucore==0.0.24
+opencv-python-headless==4.11.0.86
+rich==14.0.0
+click==8.2.1
+onnxscript==0.3.2
+onnxslim==0.1.71
+psutil==7.0.0
+tqdm==4.67.1
+h5py==3.14.0
+typing-extensions>=4.12,<5

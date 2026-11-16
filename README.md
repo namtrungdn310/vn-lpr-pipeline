@@ -1,133 +1,93 @@
-# Vietnamese License Plate OCR Pipeline
+# Vietnamese License Plate Pipeline
 
-Chuẩn hoá dataset biển số Việt Nam, train/inference theo nguồn VietLPR và so sánh hiệu năng OCR trên CPU.
+Chuẩn hoá dataset DET/REC, giữ detector YOLO26n-OBB đã train và so sánh OCR FP32 sau khi học cùng dataset.
 
-Luồng chính: **Chuẩn hoá DET/REC → Train VietLPR → Evaluation → Bảng xếp hạng**.
+**Luồng hiện tại:** `vn-plate-dataset_v2` → train/val sáu OCR trên RTX 5070 → chọn best → kiểm ONNX FP32 → benchmark bảy OCR trên i5-14600KF.
 
-Nhóm chính gồm **VietLPR V1/V2 và 7 bản PaddleOCR**. Năm model public bổ sung chỉ dùng làm đối chứng khi test;
-không tích hợp vào luồng train hoặc inference chính. Code nguồn tải về để nạp/chuyển model và trọng số nằm trong `runs/`, không đưa lên Git.
+| Model | Xử lý trong lượt này |
+|---|---|
+| **VietLPR_v1** | Giữ nguyên trọng số đã chốt, trước đây tên VietLPR_v2; không train lại |
+| CCT_S_VN | Fine-tune CCT-S-v1 trên ảnh toàn biển |
+| PP-OCRv4_mobile | Fine-tune cả DET dòng và REC |
+| PP-OCRv6_small | Fine-tune cả DET dòng và REC |
+| PP-OCRv5_mobile | Fine-tune cả DET dòng và REC |
+| PP-OCRv6_tiny | Fine-tune cả DET dòng và REC |
+| LPRNet_VN | Fine-tune CTC trên ảnh toàn biển |
 
-## Bắt đầu từ đâu?
+Model VietLPR_v1 cũ và bảng 14 pretrained không thuộc lượt so sánh này.
+Tên V2 còn trong mã/manifest nguồn để truy vết model đã chốt; tên công bố hiện tại là **VietLPR_v1**.
+YOLO26n-OBB giữ nguyên checkpoint và graph; không train lại detector toàn biển.
 
-| Giai đoạn | Notebook | Kernel |
-|---|---|---|
-| 1. Rà nhãn/box, duyệt, crop/nắn REC, dựng và kiểm v2 | [01_prepare_dataset.ipynb](notebooks/01_prepare_dataset.ipynb) | `.venv` — Python 3.13 |
-| 2. Train/val VietLPR_v1, VietLPR_v2 và xuất best ONNX | [02_train_vietlpr.ipynb](notebooks/02_train_vietlpr.ipynb) | `.venv-ocr` — Python 3.11 |
-| 3. Chuẩn bị Paddle pretrained, test CPU và xem bảng | [03_evaluate_models.ipynb](notebooks/03_evaluate_models.ipynb) | `.venv-ocr` — Python 3.11 |
+## Bắt đầu trên PC ở nhà
 
-Trên máy đã có kết quả: mở notebook **03** và chạy từ đầu. Mặc định chỉ đọc kết quả đã lưu.
-Khi mới clone, cần train/export V1/V2 và bật evaluation để tạo kết quả; trọng số và số đo không đi kèm repository.
-Sau khi đổi cấu trúc, chọn lại đúng kernel và **Restart Kernel** trước khi chạy notebook mới.
-Notebook **02** có cờ `RUN_TRAINING`, `RUN_EXPORT`, `RUN_SMOKE`; notebook **03** có `RUN_EVALUATION`, `RUN_PUBLIC_VN` và `RECALIBRATE`.
-Bật đúng tác vụ cần thực hiện. Paddle được chuẩn bị bằng pretrained, không train lại.
+Hướng dẫn đầy đủ: **[docs/pc_training.md](docs/pc_training.md)**.
+Windows 11, Python 3.11 x64, RTX 5070 12 GB để train; CPU i5-14600KF để đo.
 
-## Cấu trúc dự án
+```powershell
+git pull origin main
+.\scripts\setup_pc.ps1
+# Chép riêng dataset và model đã chốt theo hướng dẫn, rồi:
+.\.venv-train-torch\Scripts\python.exe -m ocr.adaptation.suite run
+.\.venv-benchmark\Scripts\python.exe -m ocr.adaptation.benchmark run
+```
+
+Setup dùng Torch CUDA 12.8 và Paddle CUDA 12.9 trong môi trường riêng, kiểm GPU bằng forward/backward thật trước khi train dài.
+Không cài các bộ này lên môi trường ThinkPad hiện tại. Kết quả mới không ghép Speed đo trên laptop.
+
+| Notebook | Vai trò |
+|---|---|
+| [01_prepare_dataset](notebooks/01_prepare_dataset.ipynb) | Dựng/kiểm dataset v2 |
+| [02_train_vietlpr](notebooks/02_train_vietlpr.ipynb) | Train sáu OCR, resume và export FP32 trên PC |
+| [03_evaluate_models](notebooks/03_evaluate_models.ipynb) | Benchmark bảy OCR sau train và bảng cuối |
+| [04_train_plate_detector](notebooks/04_train_plate_detector.ipynb) | Luồng detector nano đã chốt |
+| [05_evaluate_full_pipeline](notebooks/05_evaluate_full_pipeline.ipynb) | YOLO → crop → bảy OCR; cần thêm text GT toàn cảnh |
+| 06, 07 | Hồ sơ lượng tử hoá trên ThinkPad đã chốt; tách khỏi lượt FP32 này |
+
+Notebook 02/03 mặc định không chạy train/benchmark. Đổi đúng cờ khi sẵn sàng.
+
+## Cấu trúc
 
 ```text
-notebooks/                 Ba notebook theo thứ tự thực hiện
-dataset_preparation/       Đọc nhãn, chuẩn hoá, siết/duyệt box, crop và dựng v2
-ocr/                       Adapter train, inference, ONNX và evaluation
-configs/ocr/               Cấu hình model, pretrained và nguồn đã chốt
-requirements/              Thư viện tách theo môi trường
-tests/dataset/             Kiểm thử chuẩn hoá dataset
-tests/ocr/                 Kiểm thử train/inference/evaluation
-docs/                      Hướng dẫn chi tiết và giới hạn
-third_party/               Mã nguồn model/PaddleX theo phiên bản đã chốt
-metadata/                  Recipe DET–REC, checksum và quyết định duyệt
-sources/                   Ảnh REC nguồn còn giữ để tái tạo crop
-vn-plate-dataset_v2/        Dataset DET/REC dùng train, val và test
-vn-plate-dataset_v2.zip     Bản đóng gói dataset
-runs/                      Checkpoint, ONNX, log, số đo và kết quả
+configs/ocr/adaptation.json  Danh sách bảy OCR, nguồn, SHA và tham số PC
+ocr/adaptation/              Dữ liệu, train theo nguồn, export, chuyển máy, benchmark
+scripts/setup_pc.ps1         Cài và kiểm môi trường Windows/RTX 5070
+requirements/pc-*.txt        Thư viện riêng cho Torch, Paddle và CPU benchmark
+notebooks/                  Các bước có thể chạy và đọc kết quả
+dataset_preparation/        Luồng chuẩn hoá DET/REC từ đầu đến cuối
+plate_detection/            Dữ liệu OBB, train/export detector đã chốt
+lpr/                        Ghép detector với các OCR FP32 mới
+third_party/                Mã kiến trúc và tiền/hậu xử lý nguồn đã chốt
+metadata/                   Recipe và SHA dataset
+runs/ocr_adaptation/         Checkpoint, ONNX FP32, val và benchmark mới; ngoài Git
 ```
 
-Các thư mục dữ liệu và `runs/` giữ đường dẫn ổn định cho recipe/checkpoint hiện có.
-Repository lưu code, cấu hình và metadata. ZIP dataset, thư mục ảnh đã giải nén, `sources/`, môi trường Python,
-trọng số và kết quả trong `runs/` được Git bỏ qua.
+Nguồn tải cho train CCT/Paddle là checkout Git đã pin, nằm trong `third_party/*_training/` và không vendor lên Git.
+Các helper cũ đang được hồ sơ lượng tử/kiểm tra nguồn gọi vẫn giữ; chúng không chọn danh sách model của bảng mới.
 
-## Chuẩn bị dataset
+## Dữ liệu và đánh giá
 
-Dataset được lưu và chia sẻ riêng, không đi kèm khi clone repository.
-Đặt file `vn-plate-dataset_v2.zip` đã nhận vào thư mục gốc rồi giải nén:
+Dataset giữ nguyên **864 train / 222 val / 124 test** ảnh DET và **1402 / 371 / 190** crop REC.
+Không chia lại split, không train hoặc chọn hyperparameter trên test. CCT/LPRNet dùng ảnh DET toàn biển với text ghép theo dòng;
+Paddle học DET từ polygon và REC từ crop đã chuẩn hoá.
 
-```powershell
-Expand-Archive -LiteralPath .\vn-plate-dataset_v2.zip -DestinationPath .
-```
+Fine-tune chung dataset không đồng nghĩa cùng nguồn pretrained, kiến trúc, số phép tính hoặc lịch sử train.
+CCT dùng checkpoint Keras CCT-S-v1 global chính thức vì bản VN công khai chỉ có ONNX;
+LPRNet dùng trọng số VN, Paddle dùng checkpoint train chính thức. Nguồn và SHA được lưu trong config/frozen.
+Không tuyên bố đã loại hết giao nhau giữa tập pretrained bên ngoài và test nội bộ.
 
-ZIP tạo sẵn thư mục `vn-plate-dataset_v2/`. SHA256:
-`016c677fe03e39093f7f339e3d86de30eeb83ae788c20416d06a51fbe5e3b26e`.
-Train/evaluation dùng trực tiếp dataset thành phẩm. Tái tạo crop từ nguồn cần thêm `sources/` được lưu riêng.
+Benchmark: **7 model × 5 vòng = 35 pass**, bốn lõi P vật lý, bốn intra-op/một inter-op, tắt spin wait,
+OpenCV một luồng, batch một ảnh, warm-up 20; ảnh nạp sẵn RAM. Speed gồm toàn pipeline đến chuỗi cuối, loại đọc đĩa và tải model.
+SD là độ lệch chuẩn mẫu của năm trung bình vòng; FPS = 1000/Speed. Rank: ACC giảm → CER tăng → Speed tăng.
+Model chậm nhất trong bảng làm Speedup 1×. Không dùng box GT khi inference.
 
-## Code theo từng luồng
+## File giữ riêng
 
-| Phần | Các file chính |
-|---|---|
-| Chuẩn hoá và đề xuất box | `dataset_preparation/normalization.py`, `line_envelopes.py`, `text_bounds.py` |
-| Crop, dựng, kiểm tra và đóng gói | `dataset_preparation/geometry.py`, `pipeline.py` |
-| Xem ảnh DET/REC | `dataset_preparation/preview.py` |
-| Train VietLPR theo nguồn | `ocr/train_torch.py`, `upstream.py`, `torch_models.py` |
-| Checkpoint và export | `ocr/run_state.py`, `export.py` |
-| Inference VietLPR | `ocr/runtime.py`, `ops_v1.py`, `third_party/VietLPR_v2/inference.py` |
-| Chuẩn bị/chạy 7 bản Paddle | `ocr/paddle_suite.py`, `paddle_suite_convert.py`, `paddle_suite_runtime.py` |
-| Pretrained chuyên biển Việt Nam | `ocr/public_vn.py`, `public_vn_export.py`, `public_vn_runtime.py` |
-| Chấm điểm và bảng tổng hợp | `ocr/evaluate.py`, `metrics.py`, `comparison.py` |
-
-Mã gốc model nằm trong `third_party/`; code nối dữ liệu, môi trường và cách đo nằm trong `ocr/`.
-Manifest ghi commit/SHA để đối chiếu nguồn. V1/V2 giữ loss, augment, EMA, crop và tiêu chí chọn best theo từng nguồn.
-`configs/ocr/` gồm cấu hình V1/V2, `paddle_suite.json` (7 bản Paddle), `public_vn.json` (5 pretrained Việt Nam)
-và `sources.json` (nguồn code).
-
-## Dữ liệu
-
-| Split | Ảnh DET | Crop REC |
-|---|---:|---:|
-| train | 864 | 1402 |
-| val | 222 | 371 |
-| test | 124 | 190 |
-| Tổng | **1210** | **1963** |
-
-Mỗi box DET tương ứng một dòng chữ; REC được crop/nắn từ nguồn và quad đã duyệt.
-`metadata/samples.jsonl` giữ liên kết, nội dung nhãn, hai hệ tọa độ và nguồn crop.
-
-**Đầu vào Roboflow:** workspace hiện không còn đầy đủ bản ảnh/nhãn Roboflow đầu tiên.
-Notebook 01 tái tạo v2 từ dữ liệu, nguồn REC và quyết định đã giữ lại.
-Đầu vào hỗ trợ cấu trúc OCR có `det_labels.txt`/`rec_labels.txt`; export YOLO/COCO cần chuyển annotation trước.
-Chi tiết định dạng và giới hạn phục hồi: [docs/dataset.md](docs/dataset.md).
-
-## Model và evaluation
-
-- VietLPR_v1: repo `vietdai-bk/VietLPR_v2`, giữ tên V1 trong dự án để phân biệt.
-- VietLPR_v2: notebook nguồn đã cung cấp, chốt bằng SHA256.
-- PP-OCRv4: server, mobile; PP-OCRv5: server, mobile; PP-OCRv6: medium, small, tiny.
-- Pretrained chuyên biển Việt Nam: CCT-S VN, LPRNet VN, YOLOv5n/m và YOLOv8n OCR ký tự.
-
-Bảng chính gồm **14 hệ thống**: `Rank | Model | ACC | CER | Speed | FPS | Speedup`.
-Rank theo **ACC giảm dần → CER tăng dần → Speed tăng dần**. Model chậm nhất làm mốc **Speedup 1×**.
-
-Đo toàn bộ xử lý từ cùng 124 ảnh biển test đến chuỗi cuối bằng ONNX FP32, CPU 4 luồng, OpenCV 1 luồng,
-batch một ảnh biển, warm-up 20 và đo 5 lượt. ACC/CER tính toàn chuỗi; ảnh không đọc được vẫn tính lỗi.
-VietLPR/Paddle chạy DET dòng → crop → REC; CCT/LPRNet đọc toàn biển; các bản YOLO OCR phát hiện và sắp ký tự.
-Không dùng box GT để hỗ trợ suy luận. Speed loại thời gian đọc ổ đĩa và tải model. V2 gom các dòng trong cùng ảnh vào một batch REC.
-Đây là kết quả trên laptop với các pipeline/nguồn khởi tạo riêng; Speed có dao động giữa các lượt.
-
-`runs/comparison_ranked.csv` là bảng tổng hợp. Kết quả nằm trong `runs/<model>/`, `runs/paddle_suite/<tên>/`
-và `runs/public_vn_ocr/<tên>/`. Chín model gốc giữ nguyên kết quả khi bổ sung năm model public.
-Nguồn và lý do nhận/loại ứng viên: [docs/public_vn_ocr.md](docs/public_vn_ocr.md).
-Hướng dẫn source, train/resume, export và evaluation: [docs/ocr.md](docs/ocr.md).
-
-## Môi trường và kiểm thử
-
-| Môi trường | File thư viện | Mục đích |
-|---|---|---|
-| `.venv` | `requirements/dataset-dev.txt` | Dataset và notebook 01 |
-| `.venv` — nhánh DB tuỳ chọn | `requirements/dataset-bounds.txt` | Hỗ trợ đề xuất box bằng DB |
-| `.venv-ocr` | `requirements/ocr-torch.txt` | Train GPU V1/V2, export và evaluation CPU |
-| `.venv-ocr-paddle` | `requirements/ocr-paddle.txt` | Chuyển pretrained Paddle v4 và đối chiếu số học |
-
-`requirements/dataset.txt` là thư viện dataset cơ bản; `requirements/ocr-cpu.txt` là phần dùng chung của môi trường OCR.
+Không push dataset, ZIP, ảnh nguồn, checkpoint, `.keras`, ONNX, venv hay `runs/`.
+Để chuyển PC, chép `vn-plate-dataset_v2.zip` và `runs/pc_transfer/current_baselines.zip` riêng; `git pull` chỉ có code.
+Giới hạn/truy vết dataset: [docs/dataset.md](docs/dataset.md). Quy trình mới: [docs/pc_training.md](docs/pc_training.md).
 
 ```powershell
-.venv\Scripts\python.exe -m unittest discover -s tests/dataset -v
-.venv-ocr\Scripts\python.exe -m unittest discover -s tests/ocr -v
-.venv\Scripts\python.exe -m dataset_preparation.pipeline validate
-.venv-ocr\Scripts\python.exe -m ocr.comparison
+.venv\Scripts\python.exe -B -m unittest discover -s tests/dataset -q
+.venv-ocr\Scripts\python.exe -B -m unittest discover -s tests/ocr -q
+.venv-ocr\Scripts\python.exe -B -m unittest discover -s tests/detection -q
 ```

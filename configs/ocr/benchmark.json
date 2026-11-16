@@ -1,0 +1,12 @@
+{
+  "dataset": "vn-plate-dataset_v2",
+  "run_dir": "runs/ocr_benchmark",
+  "threads": 4,
+  "opencv_threads": 1,
+  "warmup": 20,
+  "rounds": 5,
+  "seed": 42,
+  "require_ac": true,
+  "measurement": "notebook03_in_memory",
+  "scope": "plate image to final text; excludes disk IO and model load"
+}

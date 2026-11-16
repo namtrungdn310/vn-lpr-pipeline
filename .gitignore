@@ -10,6 +10,8 @@ __pycache__/
 # Ảnh đã giải nén và nguồn crop giữ trên máy.
 /vn-plate-dataset_v2/
 /sources/
+/data/
+/Vietnamese-License-Plate-*/
 
 # Bản đóng gói dữ liệu giữ riêng ngoài Git.
 *.zip
@@ -24,13 +26,19 @@ __pycache__/
 *.pt
 *.ckpt
 *.safetensors
+*.keras
+*.h5
+*.weights.h5
 *.pdparams
 *.pdopt
+*.pdstates
+*.pdema
 *.pdmodel
 *.pdiparams
 *.pdiparams.info
 *.tflite
 *.engine
+*.cache
 
 # Môi trường, mã nguồn ngoài và trọng số thí nghiệm lưu riêng.
 /third_party/*

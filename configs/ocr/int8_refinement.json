@@ -1,0 +1,8 @@
+{
+  "variants": [
+    {"name":"rec_conv_relu", "ops":["Conv","Relu"], "method":"static"},
+    {"name":"rec_matmul", "ops":["MatMul"], "method":"static"},
+    {"name":"rec_matmul_dynamic", "ops":["MatMul"], "method":"dynamic"},
+    {"name":"rec_conv_relu_matmul_head_fp32", "ops":["Conv","Relu","MatMul"], "method":"static", "exclude_classifier":true}
+  ]
+}

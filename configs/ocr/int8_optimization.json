@@ -1,0 +1,29 @@
+{
+  "run_dir": "runs/int8_optimization",
+  "seed": 42,
+  "threads": 4,
+  "opencv_threads": 1,
+  "calibration_train_images": 256,
+  "calibration_rec_images": 128,
+  "val_warmup": 20,
+  "val_rounds": 3,
+  "ocr_max_correct_loss": 1,
+  "ocr_max_cer_increase_pp": 0.2,
+  "yolo_max_map_loss_pp": 1.0,
+  "yolo_max_recall_loss_pp": 1.0,
+  "candidates": {
+    "vietlpr": [
+      {"name":"s8_relu", "activation":"s8", "weight":"s8", "method":"minmax", "ops":["Conv","MatMul","Relu"], "dedicated":false},
+      {"name":"u8s8_relu", "activation":"u8", "weight":"s8", "method":"minmax", "ops":["Conv","MatMul","Relu"], "dedicated":false},
+      {"name":"u8u8_relu", "activation":"u8", "weight":"u8", "method":"minmax", "ops":["Conv","MatMul","Relu"], "dedicated":false},
+      {"name":"s8_relu_percentile", "activation":"s8", "weight":"s8", "method":"percentile", "ops":["Conv","MatMul","Relu"], "dedicated":false}
+    ],
+    "yolo": [
+      {"name":"u8s8", "activation":"u8", "weight":"s8", "method":"minmax", "ops":["Conv"], "dedicated":false},
+      {"name":"u8s8_dedicated", "activation":"u8", "weight":"s8", "method":"minmax", "ops":["Conv"], "dedicated":true},
+      {"name":"u8u8", "activation":"u8", "weight":"u8", "method":"minmax", "ops":["Conv"], "dedicated":false},
+      {"name":"u8s8_head_fp32", "activation":"u8", "weight":"s8", "method":"minmax", "ops":["Conv"], "dedicated":false, "exclude_head":true},
+      {"name":"s8_dedicated", "activation":"s8", "weight":"s8", "method":"minmax", "ops":["Conv"], "dedicated":true}
+    ]
+  }
+}

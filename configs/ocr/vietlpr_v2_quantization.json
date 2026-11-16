@@ -1,0 +1,14 @@
+{
+  "source_model": "vietlpr_v2",
+  "run_dir": "runs/vietlpr_v2/quantization",
+  "seed": 42,
+  "calibration_train_images": 256,
+  "calibration_rec_images": 128,
+  "threads": 4,
+  "warmup": 20,
+  "repeats": 5,
+  "int8_candidates": ["minmax", "percentile"],
+  "int4_block_sizes": [32, 128],
+  "int4_scope": "REC constant-weight MatMul W4A32; DET and Conv stay FP32",
+  "selection": "val ACC descending, CER ascending; keep source OCR thresholds"
+}

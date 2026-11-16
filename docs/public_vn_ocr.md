@@ -1,6 +1,6 @@
 # Pretrained chuyên biển số Việt Nam
 
-Nhóm này chỉ phục vụ test đối chứng. Luồng chính vẫn là V1/V2 và 7 bản Paddle.
+Tài liệu này ghi nguồn của lượt pretrained trước đây. **Luồng hiện tại train CCT/LPRNet và bốn Paddle trên cùng dataset:** xem [pc_training.md](pc_training.md). Bảng 14 model cũ không còn là bảng chính.
 Các file `ocr/public_vn*.py` là adapter test; code nguồn model tải theo URL/SHA và trọng số được giữ trong `runs/`, ngoài Git.
 
 Rà nguồn công khai ngày 30/10/2026 trên GitHub, Hugging Face, các liên kết dataset và model do tác giả cung cấp.
@@ -67,16 +67,16 @@ Code:
 | `ocr/public_vn.py` | Tải đúng SHA, chuẩn bị, chốt val, test và lưu số đo để resume |
 | `ocr/public_vn_export.py` | Nạp định nghĩa nguồn đã chọn, xuất ONNX và đối chiếu Torch/ONNX trên val |
 | `ocr/public_vn_runtime.py` | Tiền xử lý và giải mã theo từng họ model |
-| `ocr/comparison.py` | Kiểm kết quả/số đo gốc của cả 14 hệ thống và ghép bảng |
+| `ocr/benchmark_display.py` | Đọc bảng 14 hệ thống từ lượt đo chung |
 
 ```powershell
 .venv-ocr\Scripts\python.exe -m ocr.public_vn prepare
 .venv-ocr\Scripts\python.exe -m ocr.public_vn freeze
-.venv-ocr\Scripts\python.exe -m ocr.public_vn test
-.venv-ocr\Scripts\python.exe -m ocr.comparison
+.venv-ocr\Scripts\python.exe -B -m ocr.benchmark_display table --group ocr
 ```
 
-Trong notebook 03, `RUN_PUBLIC_VN=True` chỉ chạy nhóm mới; `RUN_EVALUATION=True` chạy cả quy trình.
-Mặc định hai cờ đều `False`, chỉ đọc kết quả. Không thay đổi dataset v2 hoặc các trọng số đã train.
-Model và số đo mới nằm ở `runs/public_vn_ocr/<tên>/`; bảng chung ở `runs/comparison_ranked.csv`.
+Notebook 03 dùng `RUN_BENCHMARK=False` để chỉ đọc kết quả đã lưu.
+Khi đo mới, dùng luồng chung trong [benchmark.md](benchmark.md), không ghép số đo riêng từng model.
+Model nằm ở `runs/public_vn_ocr/<tên>/`; bảng chung tại
+`runs/int8_optimization/benchmark/<run>/comparison_ocr.csv`.
 Các file trọng số và dữ liệu vẫn bị Git bỏ qua.

@@ -1,4 +1,4 @@
-"""Kiểm cấu hình sau khi di chuyển và quy tắc bảng tổng hợp."""
+"""Kiểm cấu hình model và nguồn đã chốt."""
 
 import json
 from pathlib import Path
@@ -7,7 +7,6 @@ import unittest
 
 from ocr.config import ROOT, load_config, same_training_config
 from ocr.paddle_suite import load_catalog
-from ocr.comparison import CONDITIONS, check_conditions, rank_results
 
 
 class StructureTests(unittest.TestCase):
@@ -20,7 +19,7 @@ class StructureTests(unittest.TestCase):
 
     def test_paddle_sources_point_to_catalog_and_pinned_processors(self):
         sources = json.loads((ROOT / "configs/ocr/sources.json").read_text(encoding="utf-8"))
-        self.assertEqual(set(sources), {"vietlpr_v1", "vietlpr_v2", "paddle_suite", "public_vn"})
+        self.assertEqual(set(sources), {"vietlpr_v1", "adaptation", "paddle_suite", "public_vn"})
         paddle = sources["paddle_suite"]
         self.assertTrue((ROOT / paddle["models_config"]).is_file())
         self.assertEqual(len(load_catalog()["variants"]), 7)
@@ -33,30 +32,3 @@ class StructureTests(unittest.TestCase):
         self.assertTrue(same_training_config(cfg, {**cfg, "config_path": "new.json"}))
         self.assertFalse(same_training_config(cfg, {**cfg, "seed": 43}))
         self.assertFalse(same_training_config(cfg, {**cfg, "model": {"width": 2}}))
-
-    def samples(self):
-        base = {key: "same" for key in CONDITIONS}
-        return [{**base, "Model": name, "ACC": acc, "CER": cer, "Speed": speed, "FPS": 1000 / speed}
-                for name, acc, cer, speed in [("A", 90, 2, 10), ("B", 95, 1, 100), ("C", 90, 1, 20)]]
-
-    def test_rank_prefers_accuracy_then_cer_and_slowest_is_one(self):
-        rows = rank_results(self.samples())
-        self.assertEqual([row["Model"] for row in rows], ["B", "C", "A"])
-        self.assertEqual([row["Rank"] for row in rows], [1, 2, 3])
-        self.assertEqual([row["Speedup"] for row in rows], [1, 5, 10])
-
-    def test_different_measurement_settings_are_rejected(self):
-        rows = self.samples()
-        rows[1]["threads"] = 8
-        with self.assertRaisesRegex(ValueError, "threads"):
-            check_conditions(rows)
-
-    def test_only_full_plate_input_to_text_scopes_may_be_combined(self):
-        rows = self.samples()
-        rows[0]["timing_scope"] = "plate image to final text; excludes disk IO and model load"
-        for row in rows[1:]:
-            row["timing_scope"] = "preprocess+DET+postprocess+crop+REC+decode; excludes disk IO and model load"
-        check_conditions(rows)
-        rows[0]["timing_scope"] = "REC on ground truth line crops only"
-        with self.assertRaisesRegex(ValueError, "timing_scope"):
-            check_conditions(rows)

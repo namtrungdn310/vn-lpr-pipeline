@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "dataset": "vn-plate-dataset_v2",
+  "dataset_fingerprint": "37ede68b16a9fe50fece03ae7f156923263c73efb8cc42c9d4978bb5bb34e7ab",
+  "run_dir": "runs/ocr_adaptation",
+  "precision": "FP32",
+  "seed": 42,
+  "hardware": {
+    "os": "Windows 11",
+    "train_gpu": "RTX 5070",
+    "benchmark_cpu": "Intel Core i5-14600KF"
+  },
+  "training": {
+    "epochs": 100,
+    "patience": 20,
+    "rec_batch": 64,
+    "det_batch": 16,
+    "workers": 0,
+    "lr": 0.0001,
+    "weight_decay": 0.0001
+  },
+  "benchmark": {
+    "threads": 4,
+    "opencv_threads": 1,
+    "warmup": 20,
+    "rounds": 5,
+    "require_ac": true,
+    "allow_battery_absent": true,
+    "scope": "cropped plate image to final text; excludes disk I/O and model load"
+  },
+  "models": [
+    {
+      "name": "VietLPR_v1",
+      "family": "vietlpr",
+      "train": false
+    },
+    {
+      "name": "CCT_S_VN",
+      "family": "cct",
+      "train": true
+    },
+    {
+      "name": "PP-OCRv4_mobile",
+      "family": "paddle",
+      "train": true,
+      "version": "PP-OCRv4"
+    },
+    {
+      "name": "PP-OCRv6_small",
+      "family": "paddle",
+      "train": true,
+      "version": "PP-OCRv6"
+    },
+    {
+      "name": "PP-OCRv5_mobile",
+      "family": "paddle",
+      "train": true,
+      "version": "PP-OCRv5"
+    },
+    {
+      "name": "PP-OCRv6_tiny",
+      "family": "paddle",
+      "train": true,
+      "version": "PP-OCRv6"
+    },
+    {
+      "name": "LPRNet_VN",
+      "family": "lprnet",
+      "train": true
+    }
+  ],
+  "sources": {
+    "paddle": {
+      "repository": "https://github.com/PaddlePaddle/PaddleOCR.git",
+      "revision": "dab3fe35379033fdcb2d0e9572fac0b36c9a9ebf",
+      "directory": "third_party/PaddleOCR_training"
+    },
+    "cct": {
+      "repository": "https://github.com/ankandrew/fast-plate-ocr.git",
+      "revision": "9ce7a5b64a939aa421c243b331d42e6bc25ffd44",
+      "directory": "third_party/FastPlateOCR_training"
+    }
+  },
+  "assets": {
+    "PP-OCRv4_mobile_det_pretrained.pdparams": {
+      "url": "https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv4_mobile_det_pretrained.pdparams",
+      "sha256": "7fcc0743fc2d6e7c8fcc010631f8d20cec5c888a6d79bd078fe4f3c44a8e75fd",
+      "bytes": 14381327
+    },
+    "PP-OCRv4_mobile_rec_pretrained.pdparams": {
+      "url": "https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv4_mobile_rec_pretrained.pdparams",
+      "sha256": "b0ad5a6b0ba72548a60f52696f3345d68c249a7c8185cc2fdc53febb2b5bc05d",
+      "bytes": 92072427
+    },
+    "PP-OCRv5_mobile_det_pretrained.pdparams": {
+      "url": "https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv5_mobile_det_pretrained.pdparams",
+      "sha256": "7e2e3b0bd5bbdcb0b842cb92aaacc2852f80299a4858b8767a45bd0c6e955648",
+      "bytes": 14381327
+    },
+    "PP-OCRv5_mobile_rec_pretrained.pdparams": {
+      "url": "https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv5_mobile_rec_pretrained.pdparams",
+      "sha256": "04745475b97a1faf029c7442a4c4421b156249b9395814e509bf4a9804e37750",
+      "bytes": 133890015
+    },
+    "PP-OCRv6_small_det_pretrained.pdparams": {
+      "url": "https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv6_small_det_pretrained.pdparams",
+      "sha256": "13e7072d5d6837ee809b03b91ea9def6dc1b1831b3c6e49405e6ddf97875043f",
+      "bytes": 10757224
+    },
+    "PP-OCRv6_small_rec_pretrained.pdparams": {
+      "url": "https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv6_small_rec_pretrained.pdparams",
+      "sha256": "25c9bd54b0e5900916e8bb6ada938abeffb1eac1baedac0ca54a45b1c9310825",
+      "bytes": 124912348
+    },
+    "PP-OCRv6_tiny_det_pretrained.pdparams": {
+      "url": "https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv6_tiny_det_pretrained.pdparams",
+      "sha256": "794a6991100f9cd992504c5ee40931aecab290fff51299f56e1f942c52a20b44",
+      "bytes": 2147895
+    },
+    "PP-OCRv6_tiny_rec_pretrained.pdparams": {
+      "url": "https://paddle-model-ecology.bj.bcebos.com/paddlex/official_pretrained_model/PP-OCRv6_tiny_rec_pretrained.pdparams",
+      "sha256": "960cb4aa5276e3ac235b7f671fb8c9a7c1c1423617da0f96da66a33d0ed53f84",
+      "bytes": 71528759
+    },
+    "cct_s_v1_global.keras": {
+      "url": "https://github.com/ankandrew/fast-plate-ocr/releases/download/arg-plates/cct_s_v1_global.keras",
+      "sha256": "6960906f834b5acedb80897c1db9dda0444ec03236be00c3461051a843383b90",
+      "bytes": 26222254
+    },
+    "cct_s_v1_global_model_config.yaml": {
+      "url": "https://github.com/ankandrew/fast-plate-ocr/releases/download/arg-plates/cct_s_v1_global_model_config.yaml",
+      "sha256": "2173c186cd8b2c31fe934e8089f5ed6a408e68662e2229cd8f210b326beb2e39",
+      "bytes": 998
+    },
+    "cct_s_v1_global_plate_config.yaml": {
+      "url": "https://github.com/ankandrew/fast-plate-ocr/releases/download/arg-plates/cct_s_v1_global_plate_config.yaml",
+      "sha256": "8ade332ef026520a3360a7c154cc10be664bee25482f3997bce34a7007b4786e",
+      "bytes": 773
+    }
+  },
+  "cct_initialization": "official CCT-S-v1 global trainable Keras checkpoint; VN ONNX is not a trainable checkpoint"
+}
